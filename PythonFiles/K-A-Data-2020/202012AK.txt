@@ -1,0 +1,820 @@
+:Product: Geomagnetic Data             202012AK.txt
+:Issued: 1640 UTC 31 Jan 2021
+#
+# Prepared by the U.S. Dept. of Commerce, NOAA, Space Weather Prediction Center
+# Please send comments and suggestions to SWPC.Webmaster@noaa.gov 
+# Updated daily. Values are shown as reported, SEC does not verify accuracy.
+# Missing Data: -1
+#
+#      Geomagnetic A and K indices from the U.S. Geological Survey Stations
+#
+#               Geomagnetic
+#                 Dipole     A   ------------- 3 Hourly K Indices --------------
+# Station        Lat Long  Index 00-03 03-06 06-09 09-12 12-15 15-18 18-21 21-24
+#-------------------------------------------------------------------------------
+
+2020 Dec 1
+
+Beijing          N29 W174   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Belsk            N69 E 40   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Boulder          N49 W 42    2     0     0     0     0     1     1     1     1
+Cape Chelyuskin  N66 E177   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Chambon-la-foret N-- E---    5     2     0     0     0     0     0     0     1
+College          N65 W102    0     0     0     0     0     0     0     0     0
+Dixon Island     N63 E162   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Fredericksburg   N38 W 78    2     0     0     0     0     1     2     0     1
+Gottingen(provisional Ap)   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Kergulen Island  S57 E130   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Krenkel          N71 E156   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Learmonth        S22 E114   -1    -1    -1    -1    -1    -1    -1    -1    -1
+St. Petersburg   N56 E118   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Magadan          N51 W148   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Moscow           N51 E122   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Murmansk         N63 E127   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Novosibirsk      N45 E159   -1    -1    -1    -1    -1    -1    -1    -1    -1
+P. Tunguska      N51 E165   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Petropavlovsk    N45 W140   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Planetary(estimated Ap)      2     1     0     0     0     0     0     0     1
+Tiksi Bay        N61 W168   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Wingst           N54 E 95    2     2     0     0     0     0     0     0     2
+
+
+2020 Dec 2
+
+Beijing          N29 W174   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Belsk            N69 E 40   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Boulder          N49 W 42    3     1     1     2     0     1     1     1     1
+Cape Chelyuskin  N66 E177   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Chambon-la-foret N-- E---    4     2     1     1     1     0     0     0     1
+College          N65 W102    0     0     0     1     0     0     0     0     0
+Dixon Island     N63 E162   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Fredericksburg   N38 W 78    4     1     1     2     0     1     2     1     1
+Gottingen(provisional Ap)   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Kergulen Island  S57 E130   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Krenkel          N71 E156   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Learmonth        S22 E114   -1    -1    -1    -1    -1    -1    -1    -1    -1
+St. Petersburg   N56 E118   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Magadan          N51 W148   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Moscow           N51 E122   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Murmansk         N63 E127   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Novosibirsk      N45 E159   -1    -1    -1    -1    -1    -1    -1    -1    -1
+P. Tunguska      N51 E165   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Petropavlovsk    N45 W140   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Planetary(estimated Ap)      4     1     1     2     1     0     1     1     1
+Tiksi Bay        N61 W168   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Wingst           N54 E 95    3     2     1     1     1     0     0     1     1
+
+
+2020 Dec 3
+
+Beijing          N29 W174   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Belsk            N69 E 40   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Boulder          N49 W 42    2     0     0     0     0     1     2     1     1
+Cape Chelyuskin  N66 E177   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Chambon-la-foret N-- E---    4     0     0     0     0     1     2     0     0
+College          N65 W102    2     0     0     0     1     2     2     0     0
+Dixon Island     N63 E162   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Fredericksburg   N38 W 78    1     0     0     0     0     2     1     0     0
+Gottingen(provisional Ap)   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Kergulen Island  S57 E130   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Krenkel          N71 E156   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Learmonth        S22 E114   -1    -1    -1    -1    -1    -1    -1    -1    -1
+St. Petersburg   N56 E118   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Magadan          N51 W148   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Moscow           N51 E122   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Murmansk         N63 E127   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Novosibirsk      N45 E159   -1    -1    -1    -1    -1    -1    -1    -1    -1
+P. Tunguska      N51 E165   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Petropavlovsk    N45 W140   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Planetary(estimated Ap)      3     1     0     0     0     1     2     0     0
+Tiksi Bay        N61 W168   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Wingst           N54 E 95    2     0     0     0     1     2     2     0     0
+
+
+2020 Dec 4
+
+Beijing          N29 W174   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Belsk            N69 E 40   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Boulder          N49 W 42    1     0     0     0     0     1     1     1     0
+Cape Chelyuskin  N66 E177   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Chambon-la-foret N-- E---    2     0     0     0     0     0     0     0     0
+College          N65 W102    0     0     0     0     0     0     0     0     0
+Dixon Island     N63 E162   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Fredericksburg   N38 W 78    1     0     0     0     0     1     1     1     0
+Gottingen(provisional Ap)   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Kergulen Island  S57 E130   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Krenkel          N71 E156   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Learmonth        S22 E114   -1    -1    -1    -1    -1    -1    -1    -1    -1
+St. Petersburg   N56 E118   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Magadan          N51 W148   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Moscow           N51 E122   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Murmansk         N63 E127   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Novosibirsk      N45 E159   -1    -1    -1    -1    -1    -1    -1    -1    -1
+P. Tunguska      N51 E165   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Petropavlovsk    N45 W140   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Planetary(estimated Ap)      2     0     0     0     0     0     0     0     1
+Tiksi Bay        N61 W168   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Wingst           N54 E 95    0     0     0     0     0     0     0     0     0
+
+
+2020 Dec 5
+
+Beijing          N29 W174   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Belsk            N69 E 40   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Boulder          N49 W 42    4     0     0     1     1     2     2     2     1
+Cape Chelyuskin  N66 E177   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Chambon-la-foret N-- E---   10     0     0     0     1     2     1     3     1
+College          N65 W102    1     0     0     0     1     1     0     1     0
+Dixon Island     N63 E162   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Fredericksburg   N38 W 78    4     0     0     0     1     3     2     2     1
+Gottingen(provisional Ap)   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Kergulen Island  S57 E130   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Krenkel          N71 E156   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Learmonth        S22 E114   -1    -1    -1    -1    -1    -1    -1    -1    -1
+St. Petersburg   N56 E118   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Magadan          N51 W148   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Moscow           N51 E122   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Murmansk         N63 E127   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Novosibirsk      N45 E159   -1    -1    -1    -1    -1    -1    -1    -1    -1
+P. Tunguska      N51 E165   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Petropavlovsk    N45 W140   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Planetary(estimated Ap)      5     0     0     1     1     2     1     2     1
+Tiksi Bay        N61 W168   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Wingst           N54 E 95    4     0     0     0     1     2     1     3     2
+
+
+2020 Dec 6
+
+Beijing          N29 W174   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Belsk            N69 E 40   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Boulder          N49 W 42    7     1     1     2     2     3     2     1     2
+Cape Chelyuskin  N66 E177   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Chambon-la-foret N-- E---   11     1     1     1     1     1     1     3     3
+College          N65 W102    5     0     0     2     3     3     1     1     0
+Dixon Island     N63 E162   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Fredericksburg   N38 W 78    4     1     1     1     1     1     1     1     2
+Gottingen(provisional Ap)   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Kergulen Island  S57 E130   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Krenkel          N71 E156   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Learmonth        S22 E114   -1    -1    -1    -1    -1    -1    -1    -1    -1
+St. Petersburg   N56 E118   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Magadan          N51 W148   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Moscow           N51 E122   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Murmansk         N63 E127   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Novosibirsk      N45 E159   -1    -1    -1    -1    -1    -1    -1    -1    -1
+P. Tunguska      N51 E165   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Petropavlovsk    N45 W140   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Planetary(estimated Ap)      6     2     1     1     1     2     1     2     2
+Tiksi Bay        N61 W168   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Wingst           N54 E 95    7     2     1     1     1     2     1     3     3
+
+
+2020 Dec 7
+
+Beijing          N29 W174   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Belsk            N69 E 40   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Boulder          N49 W 42    2     1     0     0     1     1     1     1     0
+Cape Chelyuskin  N66 E177   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Chambon-la-foret N-- E---    5     0     0     1     1     0     0     0     0
+College          N65 W102    0     0     0     0     1     0     0     0     0
+Dixon Island     N63 E162   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Fredericksburg   N38 W 78    2     1     0     0     1     1     1     1     0
+Gottingen(provisional Ap)   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Kergulen Island  S57 E130   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Krenkel          N71 E156   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Learmonth        S22 E114   -1    -1    -1    -1    -1    -1    -1    -1    -1
+St. Petersburg   N56 E118   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Magadan          N51 W148   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Moscow           N51 E122   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Murmansk         N63 E127   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Novosibirsk      N45 E159   -1    -1    -1    -1    -1    -1    -1    -1    -1
+P. Tunguska      N51 E165   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Petropavlovsk    N45 W140   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Planetary(estimated Ap)      3     1     0     1     1     0     1     0     0
+Tiksi Bay        N61 W168   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Wingst           N54 E 95    2     1     0     1     1     0     1     0     0
+
+
+2020 Dec 8
+
+Beijing          N29 W174   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Belsk            N69 E 40   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Boulder          N49 W 42    5     1     1     2     2     2     2     1     0
+Cape Chelyuskin  N66 E177   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Chambon-la-foret N-- E---   10     1     2     1     1     1     0     1     2
+College          N65 W102    3     0     0     2     3     1     0     0     0
+Dixon Island     N63 E162   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Fredericksburg   N38 W 78    4     1     1     2     1     1     1     1     1
+Gottingen(provisional Ap)   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Kergulen Island  S57 E130   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Krenkel          N71 E156   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Learmonth        S22 E114   -1    -1    -1    -1    -1    -1    -1    -1    -1
+St. Petersburg   N56 E118   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Magadan          N51 W148   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Moscow           N51 E122   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Murmansk         N63 E127   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Novosibirsk      N45 E159   -1    -1    -1    -1    -1    -1    -1    -1    -1
+P. Tunguska      N51 E165   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Petropavlovsk    N45 W140   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Planetary(estimated Ap)      5     1     2     2     1     1     0     1     1
+Tiksi Bay        N61 W168   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Wingst           N54 E 95    4     1     2     1     1     2     0     1     2
+
+
+2020 Dec 9
+
+Beijing          N29 W174   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Belsk            N69 E 40   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Boulder          N49 W 42    6     1     3     2     1     1     2     2     1
+Cape Chelyuskin  N66 E177   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Chambon-la-foret N-- E---   17     2     3     2     1     1     2     4     1
+College          N65 W102    4     0     1     1     0     0     2     3     2
+Dixon Island     N63 E162   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Fredericksburg   N38 W 78    6     1     3     2     1     1     1     2     1
+Gottingen(provisional Ap)   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Kergulen Island  S57 E130   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Krenkel          N71 E156   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Learmonth        S22 E114   -1    -1    -1    -1    -1    -1    -1    -1    -1
+St. Petersburg   N56 E118   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Magadan          N51 W148   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Moscow           N51 E122   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Murmansk         N63 E127   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Novosibirsk      N45 E159   -1    -1    -1    -1    -1    -1    -1    -1    -1
+P. Tunguska      N51 E165   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Petropavlovsk    N45 W140   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Planetary(estimated Ap)      7     2     3     2     1     0     2     3     2
+Tiksi Bay        N61 W168   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Wingst           N54 E 95   10     3     3     2     1     1     2     4     2
+
+
+2020 Dec 10
+
+Beijing          N29 W174   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Belsk            N69 E 40   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Boulder          N49 W 42    6     3     2     1     1     1     2     1     1
+Cape Chelyuskin  N66 E177   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Chambon-la-foret N-- E---   13     3     2     1     1     1     0     2     3
+College          N65 W102    4     3     2     1     0     1     0     0     1
+Dixon Island     N63 E162   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Fredericksburg   N38 W 78    6     3     2     1     1     1     2     1     2
+Gottingen(provisional Ap)   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Kergulen Island  S57 E130   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Krenkel          N71 E156   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Learmonth        S22 E114   -1    -1    -1    -1    -1    -1    -1    -1    -1
+St. Petersburg   N56 E118   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Magadan          N51 W148   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Moscow           N51 E122   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Murmansk         N63 E127   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Novosibirsk      N45 E159   -1    -1    -1    -1    -1    -1    -1    -1    -1
+P. Tunguska      N51 E165   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Petropavlovsk    N45 W140   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Planetary(estimated Ap)      8     4     3     1     1     1     1     1     2
+Tiksi Bay        N61 W168   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Wingst           N54 E 95    7     3     2     1     1     1     1     2     3
+
+
+2020 Dec 11
+
+Beijing          N29 W174   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Belsk            N69 E 40   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Boulder          N49 W 42    5     2     2     2     1     1     1     1     1
+Cape Chelyuskin  N66 E177   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Chambon-la-foret N-- E---   11     3     2     1     1     1     1     3     2
+College          N65 W102    3     1     2     2     0     0     0     0     1
+Dixon Island     N63 E162   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Fredericksburg   N38 W 78    4     2     2     1     1     1     1     1     1
+Gottingen(provisional Ap)   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Kergulen Island  S57 E130   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Krenkel          N71 E156   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Learmonth        S22 E114   -1    -1    -1    -1    -1    -1    -1    -1    -1
+St. Petersburg   N56 E118   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Magadan          N51 W148   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Moscow           N51 E122   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Murmansk         N63 E127   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Novosibirsk      N45 E159   -1    -1    -1    -1    -1    -1    -1    -1    -1
+P. Tunguska      N51 E165   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Petropavlovsk    N45 W140   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Planetary(estimated Ap)      7     3     3     1     1     0     1     2     1
+Tiksi Bay        N61 W168   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Wingst           N54 E 95    7     3     2     1     1     1     1     3     2
+
+
+2020 Dec 12
+
+Beijing          N29 W174   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Belsk            N69 E 40   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Boulder          N49 W 42    4     2     1     1     1     1     2     1     1
+Cape Chelyuskin  N66 E177   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Chambon-la-foret N-- E---   10     2     1     1     1     1     1     1     2
+College          N65 W102    2     1     0     0     0     0     0     2     1
+Dixon Island     N63 E162   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Fredericksburg   N38 W 78    3     1     1     1     0     1     1     1     1
+Gottingen(provisional Ap)   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Kergulen Island  S57 E130   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Krenkel          N71 E156   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Learmonth        S22 E114   -1    -1    -1    -1    -1    -1    -1    -1    -1
+St. Petersburg   N56 E118   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Magadan          N51 W148   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Moscow           N51 E122   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Murmansk         N63 E127   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Novosibirsk      N45 E159   -1    -1    -1    -1    -1    -1    -1    -1    -1
+P. Tunguska      N51 E165   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Petropavlovsk    N45 W140   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Planetary(estimated Ap)      4     2     1     1     1     1     1     1     2
+Tiksi Bay        N61 W168   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Wingst           N54 E 95    5     2     1     1     1     1     1     1     3
+
+
+2020 Dec 13
+
+Beijing          N29 W174   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Belsk            N69 E 40   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Boulder          N49 W 42    3     2     1     0     0     1     2     2     0
+Cape Chelyuskin  N66 E177   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Chambon-la-foret N-- E---    6     3     1     0     0     1     0     2     2
+College          N65 W102    2     1     0     0     0     1     1     2     0
+Dixon Island     N63 E162   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Fredericksburg   N38 W 78    3     3     0     0     0     1     1     1     0
+Gottingen(provisional Ap)   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Kergulen Island  S57 E130   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Krenkel          N71 E156   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Learmonth        S22 E114   -1    -1    -1    -1    -1    -1    -1    -1    -1
+St. Petersburg   N56 E118   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Magadan          N51 W148   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Moscow           N51 E122   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Murmansk         N63 E127   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Novosibirsk      N45 E159   -1    -1    -1    -1    -1    -1    -1    -1    -1
+P. Tunguska      N51 E165   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Petropavlovsk    N45 W140   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Planetary(estimated Ap)      5     3     1     0     0     1     1     2     1
+Tiksi Bay        N61 W168   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Wingst           N54 E 95    5     3     1     0     0     1     0     3     2
+
+
+2020 Dec 14
+
+Beijing          N29 W174   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Belsk            N69 E 40   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Boulder          N49 W 42    3     0     0     0     1     1     2     2     0
+Cape Chelyuskin  N66 E177   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Chambon-la-foret N-- E---    7     0     1     0     0     0     1     2     2
+College          N65 W102    1     0     0     0     1     1     0     1     0
+Dixon Island     N63 E162   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Fredericksburg   N38 W 78    2     0     0     0     0     1     2     1     1
+Gottingen(provisional Ap)   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Kergulen Island  S57 E130   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Krenkel          N71 E156   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Learmonth        S22 E114   -1    -1    -1    -1    -1    -1    -1    -1    -1
+St. Petersburg   N56 E118   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Magadan          N51 W148   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Moscow           N51 E122   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Murmansk         N63 E127   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Novosibirsk      N45 E159   -1    -1    -1    -1    -1    -1    -1    -1    -1
+P. Tunguska      N51 E165   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Petropavlovsk    N45 W140   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Planetary(estimated Ap)      3     0     0     0     1     0     1     2     1
+Tiksi Bay        N61 W168   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Wingst           N54 E 95    2     0     1     0     0     0     1     2     2
+
+
+2020 Dec 15
+
+Beijing          N29 W174   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Belsk            N69 E 40   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Boulder          N49 W 42    3     1     0     2     0     1     1     1     1
+Cape Chelyuskin  N66 E177   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Chambon-la-foret N-- E---    6     2     0     1     1     0     0     1     2
+College          N65 W102    0     0     0     1     0     0     0     0     0
+Dixon Island     N63 E162   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Fredericksburg   N38 W 78    2     1     0     1     0     1     1     0     0
+Gottingen(provisional Ap)   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Kergulen Island  S57 E130   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Krenkel          N71 E156   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Learmonth        S22 E114   -1    -1    -1    -1    -1    -1    -1    -1    -1
+St. Petersburg   N56 E118   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Magadan          N51 W148   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Moscow           N51 E122   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Murmansk         N63 E127   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Novosibirsk      N45 E159   -1    -1    -1    -1    -1    -1    -1    -1    -1
+P. Tunguska      N51 E165   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Petropavlovsk    N45 W140   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Planetary(estimated Ap)      3     2     0     1     0     0     0     1     1
+Tiksi Bay        N61 W168   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Wingst           N54 E 95    2     2     0     1     0     0     0     1     2
+
+
+2020 Dec 16
+
+Beijing          N29 W174   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Belsk            N69 E 40   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Boulder          N49 W 42    3     2     1     1     0     1     1     1     0
+Cape Chelyuskin  N66 E177   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Chambon-la-foret N-- E---    5     1     0     0     1     0     1     0     1
+College          N65 W102    0     0     0     0     1     0     0     0     0
+Dixon Island     N63 E162   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Fredericksburg   N38 W 78    3     2     1     0     0     1     2     1     1
+Gottingen(provisional Ap)   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Kergulen Island  S57 E130   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Krenkel          N71 E156   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Learmonth        S22 E114   -1    -1    -1    -1    -1    -1    -1    -1    -1
+St. Petersburg   N56 E118   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Magadan          N51 W148   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Moscow           N51 E122   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Murmansk         N63 E127   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Novosibirsk      N45 E159   -1    -1    -1    -1    -1    -1    -1    -1    -1
+P. Tunguska      N51 E165   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Petropavlovsk    N45 W140   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Planetary(estimated Ap)      3     1     1     0     0     0     1     1     1
+Tiksi Bay        N61 W168   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Wingst           N54 E 95    2     1     0     0     0     1     1     1     2
+
+
+2020 Dec 17
+
+Beijing          N29 W174   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Belsk            N69 E 40   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Boulder          N49 W 42    1     0     0     0     0     0     2     1     0
+Cape Chelyuskin  N66 E177   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Chambon-la-foret N-- E---    3     1     1     0     0     0     0     0     1
+College          N65 W102    0     0     0     0     0     0     0     0     0
+Dixon Island     N63 E162   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Fredericksburg   N38 W 78    2     0     0     1     0     1     1     1     0
+Gottingen(provisional Ap)   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Kergulen Island  S57 E130   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Krenkel          N71 E156   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Learmonth        S22 E114   -1    -1    -1    -1    -1    -1    -1    -1    -1
+St. Petersburg   N56 E118   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Magadan          N51 W148   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Moscow           N51 E122   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Murmansk         N63 E127   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Novosibirsk      N45 E159   -1    -1    -1    -1    -1    -1    -1    -1    -1
+P. Tunguska      N51 E165   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Petropavlovsk    N45 W140   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Planetary(estimated Ap)      2     1     1     0     0     0     0     0     1
+Tiksi Bay        N61 W168   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Wingst           N54 E 95    1     1     1     0     0     0     0     0     1
+
+
+2020 Dec 18
+
+Beijing          N29 W174   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Belsk            N69 E 40   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Boulder          N49 W 42    3     0     0     1     1     1     2     1     1
+Cape Chelyuskin  N66 E177   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Chambon-la-foret N-- E---    5     0     0     0     0     1     1     0     1
+College          N65 W102    1     0     0     0     1     0     1     0     0
+Dixon Island     N63 E162   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Fredericksburg   N38 W 78    2     0     0     0     0     2     2     1     0
+Gottingen(provisional Ap)   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Kergulen Island  S57 E130   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Krenkel          N71 E156   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Learmonth        S22 E114   -1    -1    -1    -1    -1    -1    -1    -1    -1
+St. Petersburg   N56 E118   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Magadan          N51 W148   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Moscow           N51 E122   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Murmansk         N63 E127   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Novosibirsk      N45 E159   -1    -1    -1    -1    -1    -1    -1    -1    -1
+P. Tunguska      N51 E165   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Petropavlovsk    N45 W140   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Planetary(estimated Ap)      3     0     0     1     1     1     1     1     0
+Tiksi Bay        N61 W168   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Wingst           N54 E 95    2     1     0     0     0     1     1     1     1
+
+
+2020 Dec 19
+
+Beijing          N29 W174   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Belsk            N69 E 40   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Boulder          N49 W 42    7     1     0     2     3     3     2     2     1
+Cape Chelyuskin  N66 E177   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Chambon-la-foret N-- E---    8     2     0     1     2     2     1     1     1
+College          N65 W102    6     0     0     2     2     4     1     1     0
+Dixon Island     N63 E162   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Fredericksburg   N38 W 78    4     0     0     1     2     2     2     2     0
+Gottingen(provisional Ap)   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Kergulen Island  S57 E130   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Krenkel          N71 E156   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Learmonth        S22 E114   -1    -1    -1    -1    -1    -1    -1    -1    -1
+St. Petersburg   N56 E118   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Magadan          N51 W148   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Moscow           N51 E122   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Murmansk         N63 E127   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Novosibirsk      N45 E159   -1    -1    -1    -1    -1    -1    -1    -1    -1
+P. Tunguska      N51 E165   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Petropavlovsk    N45 W140   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Planetary(estimated Ap)      5     1     0     1     2     2     1     1     1
+Tiksi Bay        N61 W168   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Wingst           N54 E 95    5     2     1     1     2     2     1     1     2
+
+
+2020 Dec 20
+
+Beijing          N29 W174   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Belsk            N69 E 40   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Boulder          N49 W 42    6     1     2     2     2     2     2     1     1
+Cape Chelyuskin  N66 E177   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Chambon-la-foret N-- E---   10     1     1     1     1     1     1     0     2
+College          N65 W102    2     0     0     2     1     2     0     0     0
+Dixon Island     N63 E162   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Fredericksburg   N38 W 78    4     1     1     2     1     2     1     1     1
+Gottingen(provisional Ap)   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Kergulen Island  S57 E130   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Krenkel          N71 E156   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Learmonth        S22 E114   -1    -1    -1    -1    -1    -1    -1    -1    -1
+St. Petersburg   N56 E118   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Magadan          N51 W148   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Moscow           N51 E122   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Murmansk         N63 E127   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Novosibirsk      N45 E159   -1    -1    -1    -1    -1    -1    -1    -1    -1
+P. Tunguska      N51 E165   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Petropavlovsk    N45 W140   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Planetary(estimated Ap)      4     1     1     2     1     1     1     0     1
+Tiksi Bay        N61 W168   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Wingst           N54 E 95    4     1     1     1     1     1     2     1     2
+
+
+2020 Dec 21
+
+Beijing          N29 W174   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Belsk            N69 E 40   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Boulder          N49 W 42    9     2     2     3     3     2     1     1     3
+Cape Chelyuskin  N66 E177   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Chambon-la-foret N-- E---   22     2     3     2     2     2     1     3     4
+College          N65 W102   11     0     1     2     5     1     0     1     4
+Dixon Island     N63 E162   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Fredericksburg   N38 W 78    8     2     3     1     2     2     1     2     3
+Gottingen(provisional Ap)   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Kergulen Island  S57 E130   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Krenkel          N71 E156   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Learmonth        S22 E114   -1    -1    -1    -1    -1    -1    -1    -1    -1
+St. Petersburg   N56 E118   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Magadan          N51 W148   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Moscow           N51 E122   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Murmansk         N63 E127   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Novosibirsk      N45 E159   -1    -1    -1    -1    -1    -1    -1    -1    -1
+P. Tunguska      N51 E165   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Petropavlovsk    N45 W140   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Planetary(estimated Ap)     12     2     3     2     2     2     1     2     4
+Tiksi Bay        N61 W168   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Wingst           N54 E 95   14     2     3     2     2     2     1     3     5
+
+
+2020 Dec 22
+
+Beijing          N29 W174   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Belsk            N69 E 40   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Boulder          N49 W 42   11     3     3     2     3     2     2     3     1
+Cape Chelyuskin  N66 E177   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Chambon-la-foret N-- E---   28     3     3     2     2     3     3     4     2
+College          N65 W102   17     3     2     3     5     4     3     1     1
+Dixon Island     N63 E162   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Fredericksburg   N38 W 78   11     3     3     2     3     2     2     3     2
+Gottingen(provisional Ap)   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Kergulen Island  S57 E130   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Krenkel          N71 E156   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Learmonth        S22 E114   -1    -1    -1    -1    -1    -1    -1    -1    -1
+St. Petersburg   N56 E118   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Magadan          N51 W148   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Moscow           N51 E122   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Murmansk         N63 E127   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Novosibirsk      N45 E159   -1    -1    -1    -1    -1    -1    -1    -1    -1
+P. Tunguska      N51 E165   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Petropavlovsk    N45 W140   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Planetary(estimated Ap)     13     3     3     3     3     2     3     3     2
+Tiksi Bay        N61 W168   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Wingst           N54 E 95   14     3     3     3     2     3     3     4     2
+
+
+2020 Dec 23
+
+Beijing          N29 W174   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Belsk            N69 E 40   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Boulder          N49 W 42   15     3     5     3     3     2     2     2     2
+Cape Chelyuskin  N66 E177   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Chambon-la-foret N-- E---   10     3     4     2     2     2     1     1     2
+College          N65 W102   18     2     2     3     5     5     2     2     1
+Dixon Island     N63 E162   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Fredericksburg   N38 W 78   11     3     4     3     3     1     1     1     1
+Gottingen(provisional Ap)   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Kergulen Island  S57 E130   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Krenkel          N71 E156   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Learmonth        S22 E114   -1    -1    -1    -1    -1    -1    -1    -1    -1
+St. Petersburg   N56 E118   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Magadan          N51 W148   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Moscow           N51 E122   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Murmansk         N63 E127   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Novosibirsk      N45 E159   -1    -1    -1    -1    -1    -1    -1    -1    -1
+P. Tunguska      N51 E165   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Petropavlovsk    N45 W140   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Planetary(estimated Ap)     12     3     4     3     3     2     1     2     2
+Tiksi Bay        N61 W168   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Wingst           N54 E 95   11     3     4     2     2     2     1     2     3
+
+
+2020 Dec 24
+
+Beijing          N29 W174   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Belsk            N69 E 40   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Boulder          N49 W 42    9     1     3     3     3     2     2     2     1
+Cape Chelyuskin  N66 E177   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Chambon-la-foret N-- E---   13     0     2     1     2     2     3     1     2
+College          N65 W102   20     1     2     3     5     5     4     2     1
+Dixon Island     N63 E162   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Fredericksburg   N38 W 78    7     1     2     2     2     2     3     1     1
+Gottingen(provisional Ap)   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Kergulen Island  S57 E130   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Krenkel          N71 E156   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Learmonth        S22 E114   -1    -1    -1    -1    -1    -1    -1    -1    -1
+St. Petersburg   N56 E118   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Magadan          N51 W148   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Moscow           N51 E122   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Murmansk         N63 E127   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Novosibirsk      N45 E159   -1    -1    -1    -1    -1    -1    -1    -1    -1
+P. Tunguska      N51 E165   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Petropavlovsk    N45 W140   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Planetary(estimated Ap)     10     1     3     2     2     3     3     1     2
+Tiksi Bay        N61 W168   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Wingst           N54 E 95   11     1     3     2     2     3     4     2     2
+
+
+2020 Dec 25
+
+Beijing          N29 W174   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Belsk            N69 E 40   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Boulder          N49 W 42    6     2     2     1     1     3     2     1     0
+Cape Chelyuskin  N66 E177   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Chambon-la-foret N-- E---    7     2     1     1     1     2     2     0     0
+College          N65 W102    4     1     1     1     1     3     2     0     0
+Dixon Island     N63 E162   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Fredericksburg   N38 W 78    4     2     2     1     1     2     1     0     0
+Gottingen(provisional Ap)   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Kergulen Island  S57 E130   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Krenkel          N71 E156   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Learmonth        S22 E114   -1    -1    -1    -1    -1    -1    -1    -1    -1
+St. Petersburg   N56 E118   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Magadan          N51 W148   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Moscow           N51 E122   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Murmansk         N63 E127   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Novosibirsk      N45 E159   -1    -1    -1    -1    -1    -1    -1    -1    -1
+P. Tunguska      N51 E165   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Petropavlovsk    N45 W140   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Planetary(estimated Ap)      5     3     2     1     1     2     1     0     0
+Tiksi Bay        N61 W168   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Wingst           N54 E 95    4     3     1     1     1     2     1     0     0
+
+
+2020 Dec 26
+
+Beijing          N29 W174   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Belsk            N69 E 40   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Boulder          N49 W 42    3     0     1     1     0     1     2     1     2
+Cape Chelyuskin  N66 E177   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Chambon-la-foret N-- E---   12     0     1     1     1     1     1     3     3
+College          N65 W102    0     0     0     0     0     0     1     0     0
+Dixon Island     N63 E162   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Fredericksburg   N38 W 78    3     0     2     1     0     1     2     1     1
+Gottingen(provisional Ap)   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Kergulen Island  S57 E130   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Krenkel          N71 E156   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Learmonth        S22 E114   -1    -1    -1    -1    -1    -1    -1    -1    -1
+St. Petersburg   N56 E118   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Magadan          N51 W148   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Moscow           N51 E122   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Murmansk         N63 E127   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Novosibirsk      N45 E159   -1    -1    -1    -1    -1    -1    -1    -1    -1
+P. Tunguska      N51 E165   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Petropavlovsk    N45 W140   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Planetary(estimated Ap)      4     0     2     1     0     1     1     2     2
+Tiksi Bay        N61 W168   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Wingst           N54 E 95    6     0     2     1     1     1     1     3     3
+
+
+2020 Dec 27
+
+Beijing          N29 W174   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Belsk            N69 E 40   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Boulder          N49 W 42    6     1     2     1     2     2     2     2     1
+Cape Chelyuskin  N66 E177   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Chambon-la-foret N-- E---   10     1     1     1     2     2     1     1     2
+College          N65 W102    2     0     0     1     0     2     1     1     1
+Dixon Island     N63 E162   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Fredericksburg   N38 W 78    4     2     1     1     1     1     1     1     1
+Gottingen(provisional Ap)   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Kergulen Island  S57 E130   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Krenkel          N71 E156   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Learmonth        S22 E114   -1    -1    -1    -1    -1    -1    -1    -1    -1
+St. Petersburg   N56 E118   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Magadan          N51 W148   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Moscow           N51 E122   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Murmansk         N63 E127   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Novosibirsk      N45 E159   -1    -1    -1    -1    -1    -1    -1    -1    -1
+P. Tunguska      N51 E165   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Petropavlovsk    N45 W140   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Planetary(estimated Ap)      6     2     2     1     2     2     1     1     2
+Tiksi Bay        N61 W168   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Wingst           N54 E 95    6     2     2     0     2     2     1     1     3
+
+
+2020 Dec 28
+
+Beijing          N29 W174   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Belsk            N69 E 40   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Boulder          N49 W 42    7     2     2     2     3     2     2     1     1
+Cape Chelyuskin  N66 E177   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Chambon-la-foret N-- E---   14     1     2     2     2     2     2     3     1
+College          N65 W102    7     1     2     3     3     2     2     0     0
+Dixon Island     N63 E162   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Fredericksburg   N38 W 78    6     2     2     2     2     2     2     1     1
+Gottingen(provisional Ap)   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Kergulen Island  S57 E130   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Krenkel          N71 E156   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Learmonth        S22 E114   -1    -1    -1    -1    -1    -1    -1    -1    -1
+St. Petersburg   N56 E118   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Magadan          N51 W148   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Moscow           N51 E122   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Murmansk         N63 E127   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Novosibirsk      N45 E159   -1    -1    -1    -1    -1    -1    -1    -1    -1
+P. Tunguska      N51 E165   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Petropavlovsk    N45 W140   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Planetary(estimated Ap)      7     2     2     2     2     2     1     1     2
+Tiksi Bay        N61 W168   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Wingst           N54 E 95    8     2     2     2     2     2     1     3     2
+
+
+2020 Dec 29
+
+Beijing          N29 W174   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Belsk            N69 E 40   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Boulder          N49 W 42    6     2     2     2     1     1     2     1     2
+Cape Chelyuskin  N66 E177   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Chambon-la-foret N-- E---    9     2     2     1     1     1     1     1     2
+College          N65 W102    3     1     1     1     1     1     1     1     1
+Dixon Island     N63 E162   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Fredericksburg   N38 W 78    5     2     2     1     1     1     2     1     2
+Gottingen(provisional Ap)   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Kergulen Island  S57 E130   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Krenkel          N71 E156   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Learmonth        S22 E114   -1    -1    -1    -1    -1    -1    -1    -1    -1
+St. Petersburg   N56 E118   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Magadan          N51 W148   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Moscow           N51 E122   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Murmansk         N63 E127   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Novosibirsk      N45 E159   -1    -1    -1    -1    -1    -1    -1    -1    -1
+P. Tunguska      N51 E165   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Petropavlovsk    N45 W140   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Planetary(estimated Ap)      7     3     2     1     1     1     2     1     3
+Tiksi Bay        N61 W168   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Wingst           N54 E 95    8     2     3     1     1     1     2     2     3
+
+
+2020 Dec 30
+
+Beijing          N29 W174   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Belsk            N69 E 40   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Boulder          N49 W 42    7     2     2     2     2     2     2     2     2
+Cape Chelyuskin  N66 E177   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Chambon-la-foret N-- E---   13     2     2     2     2     2     1     1     3
+College          N65 W102    3     1     1     2    -1     2     0     0     1
+Dixon Island     N63 E162   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Fredericksburg   N38 W 78    6     2     2     2     2     2     1     1     2
+Gottingen(provisional Ap)   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Kergulen Island  S57 E130   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Krenkel          N71 E156   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Learmonth        S22 E114   -1    -1    -1    -1    -1    -1    -1    -1    -1
+St. Petersburg   N56 E118   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Magadan          N51 W148   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Moscow           N51 E122   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Murmansk         N63 E127   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Novosibirsk      N45 E159   -1    -1    -1    -1    -1    -1    -1    -1    -1
+P. Tunguska      N51 E165   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Petropavlovsk    N45 W140   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Planetary(estimated Ap)      9     3     3     2     2     2     1     1     3
+Tiksi Bay        N61 W168   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Wingst           N54 E 95   10     3     3     2     2     2     1     1     4
+
+
+2020 Dec 31
+
+Beijing          N29 W174   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Belsk            N69 E 40   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Boulder          N49 W 42    5     2     1     1     2     1     2     1     1
+Cape Chelyuskin  N66 E177   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Chambon-la-foret N-- E---    6     2     1     1     1     1     1     0     1
+College          N65 W102    1     1     0     0     2     0     0     0     0
+Dixon Island     N63 E162   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Fredericksburg   N38 W 78    2     1     0     0     2     1     1     1     0
+Gottingen(provisional Ap)   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Kergulen Island  S57 E130   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Krenkel          N71 E156   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Learmonth        S22 E114   -1    -1    -1    -1    -1    -1    -1    -1    -1
+St. Petersburg   N56 E118   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Magadan          N51 W148   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Moscow           N51 E122   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Murmansk         N63 E127   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Novosibirsk      N45 E159   -1    -1    -1    -1    -1    -1    -1    -1    -1
+P. Tunguska      N51 E165   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Petropavlovsk    N45 W140   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Planetary(estimated Ap)      3     2     1     0     1     0     0     1     1
+Tiksi Bay        N61 W168   -1    -1    -1    -1    -1    -1    -1    -1    -1
+Wingst           N54 E 95    3     2     1     1     1     1     1     0     1
+

@@ -1,0 +1,122 @@
+======================================================================== 
+January 18, 2011
+                       DAILY SOLAR INDICES SUMMARIES
+
+ 			  
+This directory contains three daily summaries of solar indices. The ascii
+files are formatted in tables. The tables and column headings are defined
+below.
+
+                          Update Schedule
+   Daily Particle Data:     by 0230 UTC
+   Daily Solar Data:        by 0230, 0830, 1430, and 2030 UTC
+   Daily Geomagnetic Data:  every three hours beginning at 0030 UTC
+
+
+SWPC data are preliminary and some are later adjusted or corrected. Solar 
+and Geomagnetic indices are especially subject to adjustment. Final data
+are archived at the National Geophysical Data Center.
+http://www.ngdc.noaa.gov/stp
+
+The SWPC Primary GOES satellite for the Electron Fluence was changed from
+GOES 12 to GOES 11 on December 1, 2008.
+ 
+SWPC keeps older preliminary data online from 1996 for customers who want
+this data. See /ftp/pub/warehouse or
+http://www.swpc.noaa.gov/ftpmenu/warehouse.html
+
+
+Your comments and suggestions are welcome. 
+ swpc.webmaster@noaa.gov
+
+======================================================================== 
+
+A. DAILY SOLAR DATA
+
+Radio Flux Penticton 10.7 cm: The 10.7 cm (2800 MHz) full Sun radio flux 
+reported by the Dominion Radio Astrophysical Observatory at Penticton, B.C., 
+Canada on the date indicated.  Measurements are made at approximately 2000UT. 
+Values are in units of 10 E-22/Sq Wm/Hz and are not corrected for the variable 
+Sun-Earth distance resulting from the eccentric orbit of the Earth around the 
+Sun.
+
+Sunspot No: The SESC sunspot number for the indicated date is from the daily 
+Solar Region Summary issued by SESC. The SESC sunspot number is computed 
+according to the Wolf Sunspot Number R=k (10g+s), where g is the number of 
+sunspot groups (regions), s is the total number of individual spots in all 
+the groups, and k is a variable scaling factor (usually <1) that indicates 
+the combined effects of observing conditions, telescope, and bias of the 
+solar observers.  A sunspot number of zero indicates there were no visible 
+sunspots on that date; a * indicates that no observations were taken. The   
+sunspot region information used to compute the daily sunspot number 
+incorporates reports from as many as six observatories.  These reports 
+are used to form a composite picture of each individual region, including 
+sunspot number, area and classification, taking into account such factors as  
+the time of observation and the quality of seeing.  This composite 
+information is the daily average obtained from the reporting observatories 
+and may not represent the latest data. It is reported daily in the Solar 
+Region Summary and listed in the Region Summary section of the Weekly.
+
+Sunspot Area : Sum of the corrected area of all observed sunspots, in units of 
+millionths of the solar hemisphere.
+
+X-ray Background Flux : The daily average background x-ray flux as measured on 
+the SWPC primary GOES satellite. Note: X-ray flux values below the B1 level can 
+be erroneous. Energetic electron contamination of the x-ray sensors occurs. At 
+times of high electron flux at geosynchronous altitude, the x-ray measurements
+in the low A-class range can be in error by 20-30%. Measurements taken during
+periods of low energetic electron fluxes are much more accurate.
+   Daily GOES X-ray Background Flux algorithm:
+     o The 24 one-hour X-ray 1-8 Angstrom; values are divided into three 
+       8-hour sections
+     o The minimum for each of these three 8-hour sections is determined;
+         ... call them min1, min2, and min3
+     o The average of the minima from the first and last 8-hour sections 
+        is calculated: min_avg = 1/2 (min1 + min3)
+     o Daily Background X-Ray Flux is the smallest of min2 or min_avg
+      X-Ray_background = minimum of (min2 or min_avg)</li>
+            
+Flares : The total number of optical and x-ray flares observed during the day.
+
+Missing data is shown as -1, except X-ray Background Flux is shown as *.
+
+
+==========================================================================
+
+B. DAILY PARTICLE DATA
+
+Proton Fluence: The daily integrated particle fluxes measured by the primary 
+GOES spacecraft at geosynchronous altitudes for protons of energies
+>1 MeV, >10 MeV, and >100 MeV in units of Protons/sq cm/day/sr.
+
+Electron Fluence: The daily integrated electron fluxes measured at 
+geosynchronous altitudes, by the primary GOES spacecraft for electrons, of 
+energies > 2 MeV in units of Electrons/sq cm/day/sr. 
+
+Neutron Monitor Percent of Background.
+                                      
+Missing proton and election values are shown as -1.0e+05.
+Missing Neutron monitor data are shown as -1.00.
+
+For primary GOES designations see http://www.swpc.noaa.gov/Data/goes.html
+
+
+==========================================================================
+ 
+C. DAILY GEOMAGNETIC DATA
+
+Fredericksburg, College, and Estimated Planetary A and K Indices:  
+The daily 24-hour A index and eight 3-hourly K indices from the 
+Fredericksburg (middle-latitude) and College  (high-latitude) stations  
+monitoring Earth's magnetic field. The estimated planetary 24 hour 
+A index and eight 3-hourly K indices are derived in real time from a 
+network of western hemisphere ground-based magnetometers.  These indices 
+may differ from the final Ap values derived by the Institut fur
+Geophysik, Gottingen, Germany, using a global network of magnetometers. 
+K indices range from 0 (very quiet) to 9 (extremely disturbed).  A indices 
+range from 0 (very quiet) to 400 (extremely disturbed). An A index of 30 or  
+greater indicates local geomagnetic storm conditions. See Appendix 
+B for further explanation.
+
+Missing A- and K-indices are shown as -1.
+
