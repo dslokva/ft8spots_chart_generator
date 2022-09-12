@@ -1,23 +1,23 @@
 import bz2
-import ctypes
 import os
 import sys
-import pytz
-import mysql
+from csv import DictReader
+import mysql.connector
 from threading import Thread
-from datetime import datetime, timedelta
-from mysql.connector import Error
+from datetime import datetime
+from clickhouse_driver import Client
 
 workDir = os.path.dirname(os.path.realpath(__file__))
 
-def decompressAndAlterReportFile(reportSuffix, dicZones):
-    report_bz2_path = f"D:/PskReporterDATA/report-{reportSuffix}.sql.bz2"
 
-    spots_path = workDir+f"/spots-{reportSuffix}.csv"
-    spots_path = spots_path.replace("\\","/")
+def decompressAndAlterReportFile(reportSuffix, dicZones):
+    report_bz2_path = f"H:/PskReporterDATA/report-{reportSuffix}.sql.bz2"
+
+    spots_path = workDir + f"/spots-{reportSuffix}.csv"
+    spots_path = spots_path.replace("\\", "/")
     spot_count = 0
     strPrefix = "INSERT INTO `report` VALUES ("
-#    out_file_header = "spotId,utc,band,zone1,zone2\n"
+    #    out_file_header = "spotId,utc,band,zone1,zone2\n"
     out_file_header = "utc,band,zone1,zone2,dxcc1,dxcc2\n"
     bunchsize = 1024288  # Experiment with different sizes
     bunch = []
@@ -38,13 +38,15 @@ def decompressAndAlterReportFile(reportSuffix, dicZones):
                                 zone2 = dicZones.get(int(f'{fields[2]}'), 0)
                                 if zone1 != 0 and zone2 != 0 and zone1 != zone2:
                                     # spot = fields[0] + "," + fields[9] + "," + fields[14][1:-1] + "," + str(zone1[0]) + "," + str(zone2[0]) + "\n"
-                                    spot = fields[9] + "," + fields[14][1:-1] + "," + str(zone1[0]) + "," + str(zone2[0]) + "," + str(fields[12]) + "," + str(fields[13]) + "\n"
+                                    spot = fields[9] + "," + fields[14][1:-1] + "," + str(zone1[0]) + "," + str(zone2[0]) + "," + str(
+                                        fields[12]) + "," + str(fields[13]) + "\n"
                                     bunch.append(spot)
                                     spot_count += 1
 
                                     if len(bunch) == bunchsize:
                                         out_file.writelines(bunch)
                                         bunch = []
+                                        print(f"Spot bulk write, count: {spot_count}")
                 out_file.writelines(bunch)
                 out_file.close()
                 print("Time spent to alter report file: " + str(datetime.now() - startDT) + ", spots count: " + str(spot_count))
@@ -113,17 +115,63 @@ def determineUTCminMax(reportSuffix):
 #     cursor.close()
 #     connection.close()
 
-def process_report_dump_file(report):
-    startDT = datetime.now()
+
+def process_report_dump_file(report, clickhouseClient):
+    # First - process original bz2 sqldump file and create reduced csv file
     out_file_name = decompressAndAlterReportFile(report, dicZones)
-    print(f"alterReportFile {report} op complete, time spent: {str(datetime.now() - startDT)}")
 
-    startDT = datetime.now()
-    minDT, maxDT = determineUTCminMax(report)
-    print(f"determineUTCminMax {report} op complete, time spent: {str(datetime.now() - startDT)}")
+    # Second - load this file into clickhouse
+    if clickhouseClient:
+        startDT = datetime.now()
+        clickhouseClient.execute(
+            'CREATE TABLE IF NOT EXISTS default.spots('
+            '`utc` Int32, '
+            '`band` String, '
+            '`zone1` Int32, '
+            '`zone2` Int32, '
+            '`dxcc1` Int32, '
+            '`dxcc2` Int32 '
+            ') ENGINE = Log;')
+        out_file_name = 'spots-' + report + '.csv'
 
-    with open('./minMaxUTC.txt', 'a+') as minMaxUTCFile:
-        minMaxUTCFile.write(f"{report}:{minDT}:{maxDT}\n")
+        schema = {
+            'utc': int,
+            'zone1': int,
+            'zone2': int,
+            'dxcc1': int,
+            'dxcc2': int,
+        }
+        bypass = lambda x: x
+
+        batch_size = 1000000
+        count = 0
+        flush_list = []
+        print(f"Report {out_file_name} - start upload to clickhouse timestamp: {str(startDT)}")
+        with open(out_file_name, 'r') as f:
+            csv_gen = ({k: schema.get(k, bypass)(v) for k, v in row.items()} for row in DictReader(f))
+            i = 1
+            for row in csv_gen:
+                flush_list.append(row)
+                count += 1
+                if count == batch_size:
+                    clickhouseClient.execute('INSERT INTO default.spots VALUES', flush_list)
+                    print(f"Processed chunk #{i}, total count: {batch_size*i}")
+                    flush_list = []
+                    count = 0
+                    i += 1
+            clickhouseClient.execute('INSERT INTO default.spots VALUES', flush_list)
+            print(f"Processed chunk #{i}, total count: {count}")
+
+        print(f"Report {out_file_name} upload to clickhouse complete, time spent: {str(datetime.now() - startDT)}")
+    else:
+        print("No valid Clickhouse client")
+
+    # startDT = datetime.now()
+    # minDT, maxDT = determineUTCminMax(report)
+    # print(f"determineUTCminMax {report} op complete, time spent: {str(datetime.now() - startDT)}")
+    #
+    # with open('./minMaxUTC.txt', 'a+') as minMaxUTCFile:
+    #     minMaxUTCFile.write(f"{report}:{minDT}:{maxDT}\n")
 
     # fetchDateStep1 = minDT.replace(hour=minDT.time().hour, minute=0, second=0, microsecond=0, tzinfo=pytz.utc)
     # fetchDateStep2 = fetchDateStep1 + timedelta(minutes=15)
@@ -140,16 +188,27 @@ def process_report_dump_file(report):
 
 
 def processReportFiles():
-    #  reportSuffix = ["2021-09-12", "2021-09-15", "2021-09-17"]
-    reportSuffix = ["2022-02-02"]
+    reportSuffix = ["2022-02-06", "2022-02-09", "2022-02-11", "2022-02-13", "2022-02-16", "2022-02-18", "2022-02-20", "2022-02-23", "2022-02-25", "2022-02-27"]
+    clickhouseConnect = connectToClickHouseDB()
     for report in reportSuffix:
-        thread = Thread(target=process_report_dump_file, args=(report,))
-        thread.start()
+        process_report_dump_file(report, clickhouseConnect)
+        # thread = Thread(target=process_report_dump_file, args=(report, connectToClickHouseDB(),))
+        # thread.start()
 
 
-def connectToDB(schemaName):
+def connectToClickHouseDB():
     try:
-        connection = mysql.connector.connect(host='localhost', database=schemaName, user='root', password='HpsFq25sxx@')
+        client = Client.from_url('clickhouse://localhost:9000/default')
+        server_version = client.execute('SELECT version()')
+        print("Connected to Clickhouse Server, version: {}".format(server_version[0][0]))
+        return client
+    except Exception as e:
+        print("Error while connecting to Clickhouse", e)
+
+
+def connectToMySQLDB(schemaName):
+    try:
+        connection = mysql.connector.connect(host='localhost', database=schemaName, user='root', password='1q2w3e$R')
         if connection.is_connected():
             db_Info = connection.get_server_info()
             print("Connected to MySQL Server, version: {}".format(db_Info))
@@ -157,13 +216,15 @@ def connectToDB(schemaName):
     except Exception as e:
         print("Error while connecting to MySQL", e)
 
+
 def getStationZonesInfo():
-    connection = connectToDB('main')
+    connection = connectToMySQLDB('main')
     cursor = connection.cursor(prepared=True)
     cursor.execute("select database();")
     cursor.fetchone()
 
-    sql_zones_Query = "select id, ituZone FROM main.ft8_stationinfo;"
+    sql_zones_Query = "select id, ituZone FROM main.ft8_stationinfo WHERE ituZone != 0;"
+
     cursor.execute(sql_zones_Query)
     dbData = cursor.fetchall()
 
@@ -177,14 +238,16 @@ def getStationZonesInfo():
 
 if __name__ == "__main__":
     try:
-        # dll = ctypes.WinDLL(f'./Ft8ChartGen_v2.dll')
-        # dll.SquareToItuZone.argtypes = [ctypes.c_wchar_p]
-
         startDT = datetime.now()
+        print("CSV import program started at: " + str(startDT))
         dicZones = getStationZonesInfo()
         print("fetched stations/zones info, time spent total: " + str(datetime.now() - startDT))
 
-        processReportFiles()
+        if len(dicZones) > 0:
+            processReportFiles()
+        else:
+            print('Error - dicZones is empty')
 
+        print(f"CSV import program ended at: {str(datetime.now())}, total time spent: {str(datetime.now() - startDT)}")
     except Exception as e:
         print("Processing error: ", e)

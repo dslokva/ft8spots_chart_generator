@@ -10,7 +10,7 @@ chart_gen = ctypes.WinDLL(f'{dir}/Ft8ChartGen.dll')
 chart_gen.SquareToItuZone.argtypes = [ctypes.c_wchar_p]
 
 try:
-    connection = mysql.connector.connect(host='localhost', database='main', user='root', password='HpsFq25sxx@')
+    connection = mysql.connector.connect(host='localhost', database='main', user='root', password='1q2w3e$R')
     if connection.is_connected():
         db_Info = connection.get_server_info()
         print("Connected to MySQL Server version ", db_Info)
@@ -25,7 +25,7 @@ try:
         # get all records
         records = cursor.fetchall()
         print("Total number of rows in table: ", cursor.rowcount)
-
+        countToCommit = 0
         for row in records:
             id = row[0]
             square = row[2]
@@ -38,13 +38,17 @@ try:
                 mySql_update_query = """UPDATE main.ft8_stationinfo SET ituZone = %s where id = %s"""
                 tuple1 = (zone, id)
                 cursor.execute(mySql_update_query, tuple1)
-                connection.commit()
+                countToCommit += 1
+
+        print(f"Commit transaction. Total rows = {countToCommit}")
+        connection.commit()
 
 except Error as e:
     print("Error while connecting to MySQL", e)
 
 finally:
-    if connection.is_connected():
-        cursor.close()
-        connection.close()
-        print("MySQL connection is closed")
+    if connection:
+        if connection.is_connected():
+            cursor.close()
+            connection.close()
+            print("MySQL connection is closed")

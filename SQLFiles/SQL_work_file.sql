@@ -1,3 +1,10 @@
+#----------------------------first insert into main callsigns data table from 2022 year----------------------------#
+insert into main.ft8_stationinfo (`id`, `callsign`, `dxcc_id`, `grid`, `lastseen`, `ituZone`)
+SELECT Ta.id, Ta.callsign, Ta.dxcc_id, LEFT(Ta.locator, 6) as grid, Ta.lastseen, 0 from main.stationinfo2022 as Ta
+where Ta.locator is not null and Ta.dxcc_id is not null #and Ta.callsign='JS2CTL' #and Ta.decoderSoftware is not null
+#and Ta.id = (select max(Tc.id) from main.stationinfo2022 as Tc where Ta.callsign = Tc.callsign);
+
+
 #----------------------------first insert into main callsigns data table from 2021 year----------------------------#
 # insert into main.ft8_stationinfo (`id`, `callsign`, `dxcc_id`, `grid`, `lastseen`, `ituZone`)
 # SELECT Ta.id, Ta.callsign, Ta.dxcc_id, LEFT(Ta.locator, 6) as grid, Ta.lastseen, 0, rate from main.stationinfo2021 as Ta
