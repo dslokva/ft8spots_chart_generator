@@ -118,21 +118,25 @@ def determineUTCminMax(reportSuffix):
 
 def process_report_dump_file(report, clickhouseClient):
     # First - process original bz2 sqldump file and create reduced csv file
-    out_file_name = decompressAndAlterReportFile(report, dicZones)
+    # out_file_name = decompressAndAlterReportFile(report, dicZones)
 
     # Second - load this file into clickhouse
     if clickhouseClient:
         startDT = datetime.now()
         clickhouseClient.execute(
-            'CREATE TABLE IF NOT EXISTS default.spots('
+            'CREATE TABLE IF NOT EXISTS default.spots_01_2023('
             '`utc` Int32, '
             '`band` String, '
             '`zone1` Int32, '
             '`zone2` Int32, '
             '`dxcc1` Int32, '
             '`dxcc2` Int32 '
-            ') ENGINE = Log;')
-        out_file_name = 'spots-' + report + '.csv'
+            ')ENGINE = MergeTree '
+            'ORDER BY (utc, band) '
+            'PARTITION BY toYYYYMM(toDateTime(utc)) '
+            'PRIMARY KEY (utc, band) '
+            'SETTINGS index_granularity = 8192;')
+        out_file_name = 'e:/PskReporterDATA/spots-' + report + '.csv'
 
         schema = {
             'utc': int,
@@ -154,12 +158,12 @@ def process_report_dump_file(report, clickhouseClient):
                 flush_list.append(row)
                 count += 1
                 if count == batch_size:
-                    clickhouseClient.execute('INSERT INTO default.spots VALUES', flush_list)
+                    clickhouseClient.execute('INSERT INTO default.spots_02_2022 VALUES', flush_list)
                     print(f"Processed chunk #{i}, total count: {batch_size*i}")
                     flush_list = []
                     count = 0
                     i += 1
-            clickhouseClient.execute('INSERT INTO default.spots VALUES', flush_list)
+            clickhouseClient.execute('INSERT INTO default.spots_02_2022 VALUES', flush_list)
             print(f"Processed chunk #{i}, total count: {count}")
 
         print(f"Report {out_file_name} upload to clickhouse complete, time spent: {str(datetime.now() - startDT)}")
@@ -188,7 +192,9 @@ def process_report_dump_file(report, clickhouseClient):
 
 
 def processReportFiles():
-    reportSuffix = ["2022-02-06", "2022-02-09", "2022-02-11", "2022-02-13", "2022-02-16", "2022-02-18", "2022-02-20", "2022-02-23", "2022-02-25", "2022-02-27"]
+    reportSuffix = ["2023-01-01"]
+    #reportSuffix = ["2022-02-02", "2022-02-04", "2022-02-06"]
+    #, "2022-02-09", "2022-02-11", "2022-02-13", "2022-02-16", "2022-02-18", "2022-02-20", "2022-02-23", "2022-02-25", "2022-02-27"]
     clickhouseConnect = connectToClickHouseDB()
     for report in reportSuffix:
         process_report_dump_file(report, clickhouseConnect)

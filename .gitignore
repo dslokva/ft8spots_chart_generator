@@ -1,3 +1,6 @@
 /PythonFiles/spots-2022-02-02.csv
 .idea/
 venv/
+ExampleFiles/report-2023-01-01.sql.bz2
+.gitignore
+ExampleFiles/stationInfo-yearto-2023-03-01.sql.bz2
