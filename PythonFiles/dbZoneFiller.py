@@ -19,7 +19,7 @@ try:
         record = cursor.fetchone()
         print("You're connected to database: ", record)
 
-        sql_select_Query = "select id, callsign, grid from main.ft8_stationinfo where ituZone = 0"
+        sql_select_Query = "select id, callsign, grid from main.ft8_stationinfo where ituZone = 0 and grid != ''"
         cursor = connection.cursor(prepared=True)
         cursor.execute(sql_select_Query)
         # get all records
@@ -34,6 +34,7 @@ try:
             if (zone == 0):
                 zone = -1
                 print("Incorrect entry: id=", id, " callsign=", row[1], " square=", square)
+                #TODO: additional check, for first 4 chars of grid (if it already not 4 chars len).                
             else:
                 mySql_update_query = """UPDATE main.ft8_stationinfo SET ituZone = %s where id = %s"""
                 tuple1 = (zone, id)

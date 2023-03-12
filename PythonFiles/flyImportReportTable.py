@@ -4,16 +4,17 @@ import sys
 from csv import DictReader
 import mysql.connector
 from threading import Thread
-from datetime import datetime
+from datetime import datetime, timedelta
 from clickhouse_driver import Client
+import pytz
 
 workDir = os.path.dirname(os.path.realpath(__file__))
 
 
 def decompressAndAlterReportFile(reportSuffix, dicZones):
-    report_bz2_path = f"H:/PskReporterDATA/report-{reportSuffix}.sql.bz2"
+    report_bz2_path = f"d:/Source/ft8spots_chart_generator/ExampleFiles/report-{reportSuffix}.sql.bz2"
 
-    spots_path = workDir + f"/spots-{reportSuffix}.csv"
+    spots_path = workDir + f"/../ExampleFiles/spots-{reportSuffix}.csv"
     spots_path = spots_path.replace("\\", "/")
     spot_count = 0
     strPrefix = "INSERT INTO `report` VALUES ("
@@ -46,33 +47,13 @@ def decompressAndAlterReportFile(reportSuffix, dicZones):
                                     if len(bunch) == bunchsize:
                                         out_file.writelines(bunch)
                                         bunch = []
-                                        print(f"Spot bulk write, count: {spot_count}")
+                                        print(f"Spot bulk write into csv file, row count: {spot_count}")
                 out_file.writelines(bunch)
                 out_file.close()
                 print("Time spent to alter report file: " + str(datetime.now() - startDT) + ", spots count: " + str(spot_count))
                 return out_file.name
     else:
         return spots_path
-
-
-def determineUTCminMax(reportSuffix):
-    report_csv_path = f"{workDir}/spots-{reportSuffix}.csv"
-    utcMax = 0
-    utcMin = sys.maxsize
-    with open(report_csv_path, mode='r') as in_file:
-        for line in in_file:
-            if (utcMax == 0):
-                utcMax = 1
-                continue
-
-            utc = int(line.split(",")[0])
-            if (utc > utcMax):
-                utcMax = utc
-
-            if (utc < utcMin):
-                utcMin = utc
-
-    return utcMin, utcMax
 
 
 # def loadAltReportCsvFile(reportSuffix, csvFilePath):
@@ -115,17 +96,43 @@ def determineUTCminMax(reportSuffix):
 #     cursor.close()
 #     connection.close()
 
+def determineUTCminMax(reportSuffix, clickhouseClient):
+    table_suffix = reportSuffix[:7].replace("-","_")
+    utcMin = 0
+    utcMax = 0
+    
+    result = clickhouseClient.execute(f'SELECT min(utc) AS minUTC, max(utc) AS maxUTC FROM spots_{table_suffix}')
+    
+    if result and len(result[0]) == 2:
+        utcMin = result[0][0]
+        utcMax = result[0][1]
+    
+#     report_csv_path = f"{workDir}/spots-{reportSuffix}.csv"
+#     utcMax = 0
+#     utcMin = sys.maxsize
+#     with open(report_csv_path, mode='r') as in_file:
+#         for line in in_file:
+#             if (utcMax == 0):
+#                 utcMax = 1
+#                 continue
+#             utc = int(line.split(",")[0])
+#             if (utc > utcMax):
+#                 utcMax = utc
+#             if (utc < utcMin):
+#                 utcMin = utc
 
-def process_report_dump_file(report, clickhouseClient):
+    return utcMin, utcMax
+
+def process_report_dump_file(reportSuffix, clickhouseClient):
     # First - process original bz2 sqldump file and create reduced csv file
     # out_file_name = decompressAndAlterReportFile(report, dicZones)
-
+    table_suffix = reportSuffix[:7].replace("-", "_")
     # Second - load this file into clickhouse
     if clickhouseClient:
         startDT = datetime.now()
         clickhouseClient.execute(
-            'CREATE TABLE IF NOT EXISTS default.spots_01_2023('
-            '`utc` Int32, '
+            f'CREATE TABLE IF NOT EXISTS default.spots_{table_suffix}'
+            '(`utc` Int32, '
             '`band` String, '
             '`zone1` Int32, '
             '`zone2` Int32, '
@@ -134,9 +141,9 @@ def process_report_dump_file(report, clickhouseClient):
             ')ENGINE = MergeTree '
             'ORDER BY (utc, band) '
             'PARTITION BY toYYYYMM(toDateTime(utc)) '
-            'PRIMARY KEY (utc, band) '
-            'SETTINGS index_granularity = 8192;')
-        out_file_name = 'e:/PskReporterDATA/spots-' + report + '.csv'
+            'PRIMARY KEY (utc, band); ')
+        
+        out_file_name = 'd:/Source/ft8spots_chart_generator/ExampleFiles/spots-' + reportSuffix + '.csv'
 
         schema = {
             'utc': int,
@@ -147,7 +154,7 @@ def process_report_dump_file(report, clickhouseClient):
         }
         bypass = lambda x: x
 
-        batch_size = 1000000
+        batch_size = 3000000
         count = 0
         flush_list = []
         print(f"Report {out_file_name} - start upload to clickhouse timestamp: {str(startDT)}")
@@ -158,37 +165,36 @@ def process_report_dump_file(report, clickhouseClient):
                 flush_list.append(row)
                 count += 1
                 if count == batch_size:
-                    clickhouseClient.execute('INSERT INTO default.spots_02_2022 VALUES', flush_list)
+                    clickhouseClient.execute(f'INSERT INTO default.spots_{table_suffix} VALUES', flush_list)
                     print(f"Processed chunk #{i}, total count: {batch_size*i}")
                     flush_list = []
                     count = 0
                     i += 1
-            clickhouseClient.execute('INSERT INTO default.spots_02_2022 VALUES', flush_list)
+            clickhouseClient.execute(f'INSERT INTO default.spots_{table_suffix} VALUES', flush_list)
             print(f"Processed chunk #{i}, total count: {count}")
 
         print(f"Report {out_file_name} upload to clickhouse complete, time spent: {str(datetime.now() - startDT)}")
     else:
         print("No valid Clickhouse client")
 
-    # startDT = datetime.now()
-    # minDT, maxDT = determineUTCminMax(report)
-    # print(f"determineUTCminMax {report} op complete, time spent: {str(datetime.now() - startDT)}")
-    #
-    # with open('./minMaxUTC.txt', 'a+') as minMaxUTCFile:
-    #     minMaxUTCFile.write(f"{report}:{minDT}:{maxDT}\n")
-
-    # fetchDateStep1 = minDT.replace(hour=minDT.time().hour, minute=0, second=0, microsecond=0, tzinfo=pytz.utc)
-    # fetchDateStep2 = fetchDateStep1 + timedelta(minutes=15)
-    #
-    # # make suitable array for min/max dates in selected range from DB
-    # counts = []
-    # while fetchDateStep2 <= maxDT:
-    #     counts.append([fetchDateStep1.timestamp(), zone1, zone2, band, 0, 0])
-    #     fetchDateStep1 = fetchDateStep2
-    #     fetchDateStep2 = fetchDateStep1 + timedelta(minutes=15)
-    #
-    # if (fetchDateStep1 <= maxDT):
-    #     counts.append([fetchDateStep1.timestamp(), zone1, zone2])
+def aggregate_15min_data(reportSuffix, clickhouseClient):
+    startDT = datetime.now()
+    minDT, maxDT = determineUTCminMax(reportSuffix, clickhouseClient)
+    # print(f"determineUTCminMax {reportSuffix} op complete, time spent: {str(datetime.now() - startDT)}")
+    
+    fetchDateStep1 = datetime.utcfromtimestamp(minDT)
+    fetchDateStep1.replace(hour=fetchDateStep1.time().hour, minute=0, second=0, microsecond=0, tzinfo=pytz.utc)
+    fetchDateStep2 = fetchDateStep1 + timedelta(minutes=15)
+    
+    # make suitable array for min/max dates in selected range from DB
+    counts = []
+    while fetchDateStep2 <= maxDT:
+        counts.append([fetchDateStep1.timestamp(), zone1, zone2, band, 0, 0])
+        fetchDateStep1 = fetchDateStep2
+        fetchDateStep2 = fetchDateStep1 + timedelta(minutes=15)
+    
+    if (fetchDateStep1 <= maxDT):
+        counts.append([fetchDateStep1.timestamp(), zone1, zone2])
 
 
 def processReportFiles():
@@ -197,7 +203,8 @@ def processReportFiles():
     #, "2022-02-09", "2022-02-11", "2022-02-13", "2022-02-16", "2022-02-18", "2022-02-20", "2022-02-23", "2022-02-25", "2022-02-27"]
     clickhouseConnect = connectToClickHouseDB()
     for report in reportSuffix:
-        process_report_dump_file(report, clickhouseConnect)
+        # process_report_dump_file(report, clickhouseConnect)
+        aggregate_15min_data(report, clickhouseConnect)
         # thread = Thread(target=process_report_dump_file, args=(report, connectToClickHouseDB(),))
         # thread.start()
 
