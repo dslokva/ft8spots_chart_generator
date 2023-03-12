@@ -12,6 +12,7 @@ workDir = os.path.dirname(os.path.realpath(__file__))
 
 
 def decompressAndAlterReportFile(reportSuffix, dicZones):
+    reportSuffix = reportSuffix.replace("_","-")
     report_bz2_path = f"d:/Source/ft8spots_chart_generator/ExampleFiles/report-{reportSuffix}.sql.bz2"
 
     spots_path = workDir + f"/../ExampleFiles/spots-{reportSuffix}.csv"
@@ -39,8 +40,7 @@ def decompressAndAlterReportFile(reportSuffix, dicZones):
                                 zone2 = dicZones.get(int(f'{fields[2]}'), 0)
                                 if zone1 != 0 and zone2 != 0 and zone1 != zone2:
                                     # spot = fields[0] + "," + fields[9] + "," + fields[14][1:-1] + "," + str(zone1[0]) + "," + str(zone2[0]) + "\n"
-                                    spot = fields[9] + "," + fields[14][1:-1] + "," + str(zone1[0]) + "," + str(zone2[0]) + "," + str(
-                                        fields[12]) + "," + str(fields[13]) + "\n"
+                                    spot = fields[9] + "," + fields[14][1:-1] + "," + str(zone1[0]) + "," + str(zone2[0]) + "," + str(fields[12]) + "," + str(fields[13]) + "\n"
                                     bunch.append(spot)
                                     spot_count += 1
 
@@ -97,15 +97,14 @@ def decompressAndAlterReportFile(reportSuffix, dicZones):
 #     connection.close()
 
 def determineUTCminMax(reportSuffix, clickhouseClient):
-    table_suffix = reportSuffix[:7].replace("-","_")
     utcMin = 0
     utcMax = 0
     
-    result = clickhouseClient.execute(f'SELECT min(utc) AS minUTC, max(utc) AS maxUTC FROM spots_{table_suffix}')
+    result = clickhouseClient.execute(f'SELECT min(utc) AS minUTC, max(utc) AS maxUTC FROM spots_{reportSuffix}')
     
     if result and len(result[0]) == 2:
-        utcMin = result[0][0]
-        utcMax = result[0][1]
+        utcMin = datetime.utcfromtimestamp(result[0][0])
+        utcMax = datetime.utcfromtimestamp(result[0][1])
     
 #     report_csv_path = f"{workDir}/spots-{reportSuffix}.csv"
 #     utcMax = 0
@@ -124,14 +123,19 @@ def determineUTCminMax(reportSuffix, clickhouseClient):
     return utcMin, utcMax
 
 def process_report_dump_file(reportSuffix, clickhouseClient):
-    # First - process original bz2 sqldump file and create reduced csv file
-    # out_file_name = decompressAndAlterReportFile(report, dicZones)
-    table_suffix = reportSuffix[:7].replace("-", "_")
-    # Second - load this file into clickhouse
     if clickhouseClient:
         startDT = datetime.now()
+        out_file_name = 'd:/Source/ft8spots_chart_generator/ExampleFiles/spots-' + reportSuffix + '.csv'
+
+        if os.path.isfile(out_file_name):
+            print(f"Report {out_file_name} already exists. Skipping.")
+            return False
+
+        # Process original bz2 sqldump file and create reduced csv file
+        out_file_name = decompressAndAlterReportFile(reportSuffix, dicZones)
+
         clickhouseClient.execute(
-            f'CREATE TABLE IF NOT EXISTS default.spots_{table_suffix}'
+            f'CREATE TABLE IF NOT EXISTS default.spots_{reportSuffix}'
             '(`utc` Int32, '
             '`band` String, '
             '`zone1` Int32, '
@@ -142,8 +146,6 @@ def process_report_dump_file(reportSuffix, clickhouseClient):
             'ORDER BY (utc, band) '
             'PARTITION BY toYYYYMM(toDateTime(utc)) '
             'PRIMARY KEY (utc, band); ')
-        
-        out_file_name = 'd:/Source/ft8spots_chart_generator/ExampleFiles/spots-' + reportSuffix + '.csv'
 
         schema = {
             'utc': int,
@@ -165,46 +167,68 @@ def process_report_dump_file(reportSuffix, clickhouseClient):
                 flush_list.append(row)
                 count += 1
                 if count == batch_size:
-                    clickhouseClient.execute(f'INSERT INTO default.spots_{table_suffix} VALUES', flush_list)
+                    clickhouseClient.execute(f'INSERT INTO default.spots_{reportSuffix} VALUES', flush_list)
                     print(f"Processed chunk #{i}, total count: {batch_size*i}")
                     flush_list = []
                     count = 0
                     i += 1
-            clickhouseClient.execute(f'INSERT INTO default.spots_{table_suffix} VALUES', flush_list)
+            clickhouseClient.execute(f'INSERT INTO default.spots_{reportSuffix} VALUES', flush_list)
             print(f"Processed chunk #{i}, total count: {count}")
 
         print(f"Report {out_file_name} upload to clickhouse complete, time spent: {str(datetime.now() - startDT)}")
     else:
         print("No valid Clickhouse client")
 
+    return True
+
+
 def aggregate_15min_data(reportSuffix, clickhouseClient):
     startDT = datetime.now()
     minDT, maxDT = determineUTCminMax(reportSuffix, clickhouseClient)
     # print(f"determineUTCminMax {reportSuffix} op complete, time spent: {str(datetime.now() - startDT)}")
     
-    fetchDateStep1 = datetime.utcfromtimestamp(minDT)
-    fetchDateStep1.replace(hour=fetchDateStep1.time().hour, minute=0, second=0, microsecond=0, tzinfo=pytz.utc)
+    fetchDateStep1 = minDT.replace(hour=minDT.time().hour, minute=0, second=0, microsecond=0)
     fetchDateStep2 = fetchDateStep1 + timedelta(minutes=15)
     
     # make suitable array for min/max dates in selected range from DB
     counts = []
     while fetchDateStep2 <= maxDT:
-        counts.append([fetchDateStep1.timestamp(), zone1, zone2, band, 0, 0])
+        counts.append([fetchDateStep1.strftime('%Y-%m-%d'), fetchDateStep1.timestamp(), fetchDateStep2.timestamp()])
         fetchDateStep1 = fetchDateStep2
         fetchDateStep2 = fetchDateStep1 + timedelta(minutes=15)
-    
-    if (fetchDateStep1 <= maxDT):
-        counts.append([fetchDateStep1.timestamp(), zone1, zone2])
+
+    counts.append([fetchDateStep1.strftime('%Y-%m-%d'), fetchDateStep1.timestamp(), maxDT.timestamp()])
+
+    processedZones = []
+    list_bands = ['10m', '12m', '15m', '17m', '20m', '30m', '40m', '60m', '80m', '160m']
+
+    # for item in counts:
+    #     day = item[0]
+    #     startUTC = item[1]
+    #     endUTC = item[2]
+    #
+    #
+    #     for zone1 in range(1, 76):
+    #         for zone2 in range(1, 76):
+    #             if (zone2 in processedZones):
+    #                 continue
+    #
+    #             for band in list_bands:
+    #
+    #
+    #         processedZones.insert(0, zone1)
+
 
 
 def processReportFiles():
-    reportSuffix = ["2023-01-01"]
+    reportSuffix = ["2023-01-01", "2023-01-04", "2023-01-06"]
     #reportSuffix = ["2022-02-02", "2022-02-04", "2022-02-06"]
     #, "2022-02-09", "2022-02-11", "2022-02-13", "2022-02-16", "2022-02-18", "2022-02-20", "2022-02-23", "2022-02-25", "2022-02-27"]
     clickhouseConnect = connectToClickHouseDB()
     for report in reportSuffix:
-        # process_report_dump_file(report, clickhouseConnect)
-        aggregate_15min_data(report, clickhouseConnect)
+        report = report.replace("-", "_")
+        if process_report_dump_file(report, clickhouseConnect):
+            aggregate_15min_data(report, clickhouseConnect)
         # thread = Thread(target=process_report_dump_file, args=(report, connectToClickHouseDB(),))
         # thread.start()
 
