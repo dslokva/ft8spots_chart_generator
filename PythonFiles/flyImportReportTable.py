@@ -127,6 +127,7 @@ def process_report_dump_file(reportSuffix, clickhouseClient):
         startDT = datetime.now()
         out_file_name = 'd:/Source/ft8spots_chart_generator/ExampleFiles/spots-' + reportSuffix + '.csv'
 
+        # simple exists check
         if os.path.isfile(out_file_name):
             print(f"Report {out_file_name} already exists. Skipping.")
             return False
