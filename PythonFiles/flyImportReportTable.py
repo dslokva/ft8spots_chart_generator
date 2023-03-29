@@ -7,10 +7,27 @@ from threading import Thread
 from datetime import datetime, timedelta
 from clickhouse_driver import Client
 import pytz
+import time
+from functools import wraps
+
+
+def benchmark(method):
+    @wraps(method)
+    def timed(*args, **kw):
+        ts = time.monotonic()
+        result = method(*args, **kw)
+        te = time.monotonic()
+        s = (te - ts)
+        all_args = ', '.join(tuple(f'{a!r}' for a in args) + tuple(f'{k}={v!r}' for k, v in kw.items()))
+        print(f'{method.__name__}({all_args}): {s:2.3f} sec.')
+        return result
+    return timed
+
 
 workDir = os.path.dirname(os.path.realpath(__file__))
 
 
+@benchmark
 def decompressAndAlterReportFile(reportSuffix, dicZones):
     reportSuffix = reportSuffix.replace("_","-")
     report_bz2_path = f"d:/Source/ft8spots_chart_generator/ExampleFiles/report-{reportSuffix}.sql.bz2"
@@ -21,7 +38,7 @@ def decompressAndAlterReportFile(reportSuffix, dicZones):
     strPrefix = "INSERT INTO `report` VALUES ("
     #    out_file_header = "spotId,utc,band,zone1,zone2\n"
     out_file_header = "utc,band,zone1,zone2,dxcc1,dxcc2\n"
-    bunchsize = 1024288  # Experiment with different sizes
+    bunchsize = 2048000  # Experiment with different sizes
     bunch = []
 
     # if altered report file not exists - will make it
@@ -50,7 +67,6 @@ def decompressAndAlterReportFile(reportSuffix, dicZones):
                                         print(f"Spot bulk write into csv file, row count: {spot_count}")
                 out_file.writelines(bunch)
                 out_file.close()
-                print("Time spent to alter report file: " + str(datetime.now() - startDT) + ", spots count: " + str(spot_count))
                 return out_file.name
     else:
         return spots_path
@@ -96,6 +112,7 @@ def decompressAndAlterReportFile(reportSuffix, dicZones):
 #     cursor.close()
 #     connection.close()
 
+
 def determineUTCminMax(reportSuffix, clickhouseClient):
     utcMin = 0
     utcMax = 0
@@ -122,21 +139,22 @@ def determineUTCminMax(reportSuffix, clickhouseClient):
 
     return utcMin, utcMax
 
+
+@benchmark
 def process_report_dump_file(reportSuffix, clickhouseClient):
     if clickhouseClient:
-        startDT = datetime.now()
         out_file_name = 'd:/Source/ft8spots_chart_generator/ExampleFiles/spots-' + reportSuffix + '.csv'
+        tableSuffix = reportSuffix[7:]
 
         # simple exists check
         if os.path.isfile(out_file_name):
-            print(f"Report {out_file_name} already exists. Skipping.")
-            return False
-
-        # Process original bz2 sqldump file and create reduced csv file
-        out_file_name = decompressAndAlterReportFile(reportSuffix, dicZones)
+            print(f"Report {out_file_name} already exists. Skipping processing from bz2 to csv.")
+        else:
+            # Process original bz2 sqldump file and create reduced csv file
+            decompressAndAlterReportFile(reportSuffix, dicZones)
 
         clickhouseClient.execute(
-            f'CREATE TABLE IF NOT EXISTS default.spots_{reportSuffix}'
+            f'CREATE TABLE IF NOT EXISTS default.spots_{tableSuffix}'
             '(`utc` Int32, '
             '`band` String, '
             '`zone1` Int32, '
@@ -157,7 +175,7 @@ def process_report_dump_file(reportSuffix, clickhouseClient):
         }
         bypass = lambda x: x
 
-        batch_size = 3000000
+        batch_size = 2500000
         count = 0
         flush_list = []
         print(f"Report {out_file_name} - start upload to clickhouse timestamp: {str(startDT)}")
@@ -168,23 +186,21 @@ def process_report_dump_file(reportSuffix, clickhouseClient):
                 flush_list.append(row)
                 count += 1
                 if count == batch_size:
-                    clickhouseClient.execute(f'INSERT INTO default.spots_{reportSuffix} VALUES', flush_list)
+                    clickhouseClient.execute(f'INSERT INTO default.spots_{tableSuffix} VALUES', flush_list)
                     print(f"Processed chunk #{i}, total count: {batch_size*i}")
                     flush_list = []
                     count = 0
                     i += 1
-            clickhouseClient.execute(f'INSERT INTO default.spots_{reportSuffix} VALUES', flush_list)
+            clickhouseClient.execute(f'INSERT INTO default.spots_{tableSuffix} VALUES', flush_list)
             print(f"Processed chunk #{i}, total count: {count}")
 
-        print(f"Report {out_file_name} upload to clickhouse complete, time spent: {str(datetime.now() - startDT)}")
+        print(f"Report {out_file_name} upload to clickhouse complete.")
     else:
         print("No valid Clickhouse client")
 
-    return True
 
-
+@benchmark
 def aggregate_15min_data(reportSuffix, clickhouseClient):
-    startDT = datetime.now()
     minDT, maxDT = determineUTCminMax(reportSuffix, clickhouseClient)
     # print(f"determineUTCminMax {reportSuffix} op complete, time spent: {str(datetime.now() - startDT)}")
     
@@ -229,7 +245,8 @@ def processReportFiles():
     for report in reportSuffix:
         report = report.replace("-", "_")
         if process_report_dump_file(report, clickhouseConnect):
-            aggregate_15min_data(report, clickhouseConnect)
+           pass
+           # aggregate_15min_data(report, clickhouseConnect)
         # thread = Thread(target=process_report_dump_file, args=(report, connectToClickHouseDB(),))
         # thread.start()
 
@@ -255,6 +272,7 @@ def connectToMySQLDB(schemaName):
         print("Error while connecting to MySQL", e)
 
 
+@benchmark
 def getStationZonesInfo():
     connection = connectToMySQLDB('main')
     cursor = connection.cursor(prepared=True)
@@ -279,7 +297,6 @@ if __name__ == "__main__":
         startDT = datetime.now()
         print("CSV import program started at: " + str(startDT))
         dicZones = getStationZonesInfo()
-        print("fetched stations/zones info, time spent total: " + str(datetime.now() - startDT))
 
         if len(dicZones) > 0:
             processReportFiles()
