@@ -18,8 +18,9 @@ def benchmark(method):
         result = method(*args, **kw)
         te = time.monotonic()
         s = (te - ts)
-        all_args = ', '.join(tuple(f'{a!r}' for a in args) + tuple(f'{k}={v!r}' for k, v in kw.items()))
-        print(f'{method.__name__}({all_args}): {s:2.3f} sec.')
+        # all_args = ', '.join(tuple(f'{a!r}' for a in args) + tuple(f'{k}={v!r}' for k, v in kw.items()))
+        # print(f'{method.__name__}({all_args}): {s:2.3f} sec.')
+        print(f'{method.__name__}: {s:2.3f} sec.')
         return result
     return timed
 
@@ -29,16 +30,16 @@ workDir = os.path.dirname(os.path.realpath(__file__))
 
 @benchmark
 def decompressAndAlterReportFile(reportSuffix, dicZones):
-    reportSuffix = reportSuffix.replace("_","-")
     report_bz2_path = f"d:/Source/ft8spots_chart_generator/ExampleFiles/report-{reportSuffix}.sql.bz2"
 
-    spots_path = workDir + f"/../ExampleFiles/spots-{reportSuffix}.csv"
+    spots_path = workDir + f"/../ExampleFiles/spots-sum-{reportSuffix}.csv"
     spots_path = spots_path.replace("\\", "/")
     spot_count = 0
     strPrefix = "INSERT INTO `report` VALUES ("
     #    out_file_header = "spotId,utc,band,zone1,zone2\n"
-    out_file_header = "utc,band,zone1,zone2,dxcc1,dxcc2\n"
-    bunchsize = 2048000  # Experiment with different sizes
+    # out_file_header = "utc,band,zone1,zone2,dxcc1,dxcc2\n"
+    out_file_header = "utc,band,zone1,zone2,cnt\n"
+    bunchsize = 384000  # Experiment with different sizes
     bunch = []
 
     # if altered report file not exists - will make it
@@ -57,7 +58,8 @@ def decompressAndAlterReportFile(reportSuffix, dicZones):
                                 zone2 = dicZones.get(int(f'{fields[2]}'), 0)
                                 if zone1 != 0 and zone2 != 0 and zone1 != zone2:
                                     # spot = fields[0] + "," + fields[9] + "," + fields[14][1:-1] + "," + str(zone1[0]) + "," + str(zone2[0]) + "\n"
-                                    spot = fields[9] + "," + fields[14][1:-1] + "," + str(zone1[0]) + "," + str(zone2[0]) + "," + str(fields[12]) + "," + str(fields[13]) + "\n"
+                                    # spot = fields[9] + "," + fields[14][1:-1] + "," + str(zone1[0]) + "," + str(zone2[0]) + "," + str(fields[12]) + "," + str(fields[13]) + "\n"
+                                    spot = fields[9] + "," + fields[14][1:-1] + "," + str(zone1[0]) + "," + str(zone2[0]) + ",1\n"
                                     bunch.append(spot)
                                     spot_count += 1
 
@@ -116,8 +118,8 @@ def decompressAndAlterReportFile(reportSuffix, dicZones):
 def determineUTCminMax(reportSuffix, clickhouseClient):
     utcMin = 0
     utcMax = 0
-    
-    result = clickhouseClient.execute(f'SELECT min(utc) AS minUTC, max(utc) AS maxUTC FROM spots_{reportSuffix}')
+    tableSuffix = reportSuffix[:7].replace("-", "_")
+    result = clickhouseClient.execute(f'SELECT min(utc) AS minUTC, max(utc) AS maxUTC FROM spots_{tableSuffix}')
     
     if result and len(result[0]) == 2:
         utcMin = datetime.utcfromtimestamp(result[0][0])
@@ -136,15 +138,15 @@ def determineUTCminMax(reportSuffix, clickhouseClient):
 #                 utcMax = utc
 #             if (utc < utcMin):
 #                 utcMin = utc
-
+    print(f"UTC from table spots_{tableSuffix}, min: {utcMin}, max: {utcMax}")
     return utcMin, utcMax
 
 
 @benchmark
 def process_report_dump_file(reportSuffix, clickhouseClient):
     if clickhouseClient:
-        out_file_name = 'd:/Source/ft8spots_chart_generator/ExampleFiles/spots-' + reportSuffix + '.csv'
-        tableSuffix = reportSuffix[7:]
+        out_file_name = 'd:/Source/ft8spots_chart_generator/ExampleFiles/spots-sum-' + reportSuffix + '.csv'
+        tableSuffix = reportSuffix[:7].replace("-","_")
 
         # simple exists check
         if os.path.isfile(out_file_name):
@@ -154,31 +156,33 @@ def process_report_dump_file(reportSuffix, clickhouseClient):
             decompressAndAlterReportFile(reportSuffix, dicZones)
 
         clickhouseClient.execute(
-            f'CREATE TABLE IF NOT EXISTS default.spots_{tableSuffix}'
+            f'CREATE TABLE IF NOT EXISTS default.spots_sum_{tableSuffix}'
             '(`utc` Int32, '
             '`band` String, '
             '`zone1` Int32, '
             '`zone2` Int32, '
-            '`dxcc1` Int32, '
-            '`dxcc2` Int32 '
-            ')ENGINE = MergeTree '
-            'ORDER BY (utc, band) '
+            '`cnt` UInt8 '
+            # '`dxcc1` Int32, '
+            # '`dxcc2` Int32 '
+            ')ENGINE = SummingMergeTree '
+            'ORDER BY (utc, band, zone1, zone2) '
             'PARTITION BY toYYYYMM(toDateTime(utc)) '
-            'PRIMARY KEY (utc, band); ')
+            'PRIMARY KEY (utc, band, zone1, zone2); ')
 
         schema = {
             'utc': int,
             'zone1': int,
             'zone2': int,
-            'dxcc1': int,
-            'dxcc2': int,
+            'cnt': int,
+            # 'dxcc1': int,
+            # 'dxcc2': int,
         }
         bypass = lambda x: x
 
-        batch_size = 2500000
+        batch_size = 2048000
         count = 0
         flush_list = []
-        print(f"Report {out_file_name} - start upload to clickhouse timestamp: {str(startDT)}")
+
         with open(out_file_name, 'r') as f:
             csv_gen = ({k: schema.get(k, bypass)(v) for k, v in row.items()} for row in DictReader(f))
             i = 1
@@ -186,12 +190,12 @@ def process_report_dump_file(reportSuffix, clickhouseClient):
                 flush_list.append(row)
                 count += 1
                 if count == batch_size:
-                    clickhouseClient.execute(f'INSERT INTO default.spots_{tableSuffix} VALUES', flush_list)
+                    clickhouseClient.execute(f'INSERT INTO default.spots_sum_{tableSuffix} VALUES', flush_list)
                     print(f"Processed chunk #{i}, total count: {batch_size*i}")
                     flush_list = []
                     count = 0
                     i += 1
-            clickhouseClient.execute(f'INSERT INTO default.spots_{tableSuffix} VALUES', flush_list)
+            clickhouseClient.execute(f'INSERT INTO default.spots_sum_{tableSuffix} VALUES', flush_list)
             print(f"Processed chunk #{i}, total count: {count}")
 
         print(f"Report {out_file_name} upload to clickhouse complete.")
@@ -202,8 +206,7 @@ def process_report_dump_file(reportSuffix, clickhouseClient):
 @benchmark
 def aggregate_15min_data(reportSuffix, clickhouseClient):
     minDT, maxDT = determineUTCminMax(reportSuffix, clickhouseClient)
-    # print(f"determineUTCminMax {reportSuffix} op complete, time spent: {str(datetime.now() - startDT)}")
-    
+
     fetchDateStep1 = minDT.replace(hour=minDT.time().hour, minute=0, second=0, microsecond=0)
     fetchDateStep2 = fetchDateStep1 + timedelta(minutes=15)
     
@@ -215,6 +218,7 @@ def aggregate_15min_data(reportSuffix, clickhouseClient):
         fetchDateStep2 = fetchDateStep1 + timedelta(minutes=15)
 
     counts.append([fetchDateStep1.strftime('%Y-%m-%d'), fetchDateStep1.timestamp(), maxDT.timestamp()])
+    # Get first day of month from reportSuffix
 
     processedZones = []
     list_bands = ['10m', '12m', '15m', '17m', '20m', '30m', '40m', '60m', '80m', '160m']
@@ -238,15 +242,14 @@ def aggregate_15min_data(reportSuffix, clickhouseClient):
 
 
 def processReportFiles():
-    reportSuffix = ["2023-01-01", "2023-01-04", "2023-01-06"]
-    #reportSuffix = ["2022-02-02", "2022-02-04", "2022-02-06"]
-    #, "2022-02-09", "2022-02-11", "2022-02-13", "2022-02-16", "2022-02-18", "2022-02-20", "2022-02-23", "2022-02-25", "2022-02-27"]
+    reportSuffix = ["2023-01-01", "2023-01-04", "2023-01-06", "2023-01-08", "2023-01-11", "2023-01-12", "2023-01-14", "2023-01-15", "2023-01-17", "2023-01-19"]
+
     clickhouseConnect = connectToClickHouseDB()
     for report in reportSuffix:
-        report = report.replace("-", "_")
         if process_report_dump_file(report, clickhouseConnect):
            pass
-           # aggregate_15min_data(report, clickhouseConnect)
+        # TODO: change to month calc
+        # aggregate_15min_data(month, clickhouseConnect)
         # thread = Thread(target=process_report_dump_file, args=(report, connectToClickHouseDB(),))
         # thread.start()
 
