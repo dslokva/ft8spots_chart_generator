@@ -9,6 +9,7 @@ from clickhouse_driver import Client
 import pytz
 import time
 from functools import wraps
+import maidenhead as mh
 
 
 def benchmark(method):
@@ -28,18 +29,22 @@ def benchmark(method):
 workDir = os.path.dirname(os.path.realpath(__file__))
 
 
+
 @benchmark
 def decompressAndAlterReportFile(reportSuffix, dicZones):
     report_bz2_path = f"d:/Source/ft8spots_chart_generator/ExampleFiles/report-{reportSuffix}.sql.bz2"
+    # report_bz2_path = f"g:/PskReporterDATA/report-{reportSuffix}.sql.bz2"
+    print(f"Start decompressing file: {report_bz2_path}")
 
-    spots_path = workDir + f"/../ExampleFiles/spots-sum-{reportSuffix}.csv"
+    spots_path = workDir + f"/../ExampleFiles/spots-sum-grid-ll-{reportSuffix}.csv"
     spots_path = spots_path.replace("\\", "/")
     spot_count = 0
     strPrefix = "INSERT INTO `report` VALUES ("
     #    out_file_header = "spotId,utc,band,zone1,zone2\n"
     # out_file_header = "utc,band,zone1,zone2,dxcc1,dxcc2\n"
-    out_file_header = "utc,band,zone1,zone2,cnt\n"
-    bunchsize = 384000  # Experiment with different sizes
+    # out_file_header = "utc,band,zone1,zone2,cnt\n"
+    out_file_header = "utc,band,zone1,zone2,grid1,grid2,lat1,lon1,lat2,lon2,cnt\n"
+    bunchsize = 512000  # Experiment with different sizes
     bunch = []
 
     # if altered report file not exists - will make it
@@ -56,10 +61,15 @@ def decompressAndAlterReportFile(reportSuffix, dicZones):
                             if fields[4] == '\'FT8\'':
                                 zone1 = dicZones.get(int(f'{fields[1]}'), 0)
                                 zone2 = dicZones.get(int(f'{fields[2]}'), 0)
+
                                 if zone1 != 0 and zone2 != 0 and zone1 != zone2:
-                                    # spot = fields[0] + "," + fields[9] + "," + fields[14][1:-1] + "," + str(zone1[0]) + "," + str(zone2[0]) + "\n"
+                                    grid1 = str(zone1[1])
+                                    grid2 = str(zone2[1])
+                                    lat1, lon1 = mh.to_location(grid1)
+                                    lat2, lon2 = mh.to_location(grid2)
+
                                     # spot = fields[9] + "," + fields[14][1:-1] + "," + str(zone1[0]) + "," + str(zone2[0]) + "," + str(fields[12]) + "," + str(fields[13]) + "\n"
-                                    spot = fields[9] + "," + fields[14][1:-1] + "," + str(zone1[0]) + "," + str(zone2[0]) + ",1\n"
+                                    spot = fields[9] + "," + fields[14][1:-1] + "," + str(zone1[0]) + "," + str(zone2[0]) + "," + grid1 + "," + grid2 + "," + str(lat1) + "," + str(lon1) + "," + str(lat2) + "," + str(lon2) +",1\n"
                                     bunch.append(spot)
                                     spot_count += 1
 
@@ -145,7 +155,7 @@ def determineUTCminMax(reportSuffix, clickhouseClient):
 @benchmark
 def process_report_dump_file(reportSuffix, clickhouseClient):
     if clickhouseClient:
-        out_file_name = 'd:/Source/ft8spots_chart_generator/ExampleFiles/spots-sum-' + reportSuffix + '.csv'
+        out_file_name = 'd:/Source/ft8spots_chart_generator/ExampleFiles/spots-sum-grid-ll-' + reportSuffix + '.csv'
         tableSuffix = reportSuffix[:7].replace("-","_")
 
         # simple exists check
@@ -156,23 +166,33 @@ def process_report_dump_file(reportSuffix, clickhouseClient):
             decompressAndAlterReportFile(reportSuffix, dicZones)
 
         clickhouseClient.execute(
-            f'CREATE TABLE IF NOT EXISTS default.spots_sum_{tableSuffix}'
+            f'CREATE TABLE IF NOT EXISTS default.spots_sum_grid_ll_{tableSuffix}'
             '(`utc` Int32, '
             '`band` String, '
             '`zone1` Int32, '
             '`zone2` Int32, '
+            '`grid1` String, '
+            '`grid2` String, '
+            '`lat1` Float64, '
+            '`lon1` Float64, '
+            '`lat2` Float64, '
+            '`lon2` Float64, '            
             '`cnt` UInt8 '
             # '`dxcc1` Int32, '
             # '`dxcc2` Int32 '
             ')ENGINE = SummingMergeTree '
-            'ORDER BY (utc, band, zone1, zone2) '
-            'PARTITION BY toYYYYMM(toDateTime(utc)) '
-            'PRIMARY KEY (utc, band, zone1, zone2); ')
+            'ORDER BY (utc, band, zone1, zone2, grid1, grid2, lat1, lon1, lat2, lon2) '
+            'PARTITION BY toYYYYMMDD(toDateTime(utc)) '
+            'PRIMARY KEY (utc, band, zone1, zone2, grid1, grid2, lat1, lon1, lat2, lon2); ')
 
         schema = {
             'utc': int,
             'zone1': int,
             'zone2': int,
+            'lat1': float,
+            'lon1': float,
+            'lat2': float,
+            'lon2': float,
             'cnt': int,
             # 'dxcc1': int,
             # 'dxcc2': int,
@@ -183,6 +203,7 @@ def process_report_dump_file(reportSuffix, clickhouseClient):
         count = 0
         flush_list = []
 
+        print(f"Open csv file for upload to ch: {out_file_name}")
         with open(out_file_name, 'r') as f:
             csv_gen = ({k: schema.get(k, bypass)(v) for k, v in row.items()} for row in DictReader(f))
             i = 1
@@ -190,12 +211,12 @@ def process_report_dump_file(reportSuffix, clickhouseClient):
                 flush_list.append(row)
                 count += 1
                 if count == batch_size:
-                    clickhouseClient.execute(f'INSERT INTO default.spots_sum_{tableSuffix} VALUES', flush_list)
+                    clickhouseClient.execute(f'INSERT INTO default.spots_sum_grid_ll_{tableSuffix} VALUES', flush_list)
                     print(f"Processed chunk #{i}, total count: {batch_size*i}")
                     flush_list = []
                     count = 0
                     i += 1
-            clickhouseClient.execute(f'INSERT INTO default.spots_sum_{tableSuffix} VALUES', flush_list)
+            clickhouseClient.execute(f'INSERT INTO default.spots_sum_grid_ll_{tableSuffix} VALUES', flush_list)
             print(f"Processed chunk #{i}, total count: {count}")
 
         print(f"Report {out_file_name} upload to clickhouse complete.")
@@ -242,7 +263,18 @@ def aggregate_15min_data(reportSuffix, clickhouseClient):
 
 
 def processReportFiles():
-    reportSuffix = ["2023-01-01", "2023-01-04", "2023-01-06", "2023-01-08", "2023-01-11", "2023-01-12", "2023-01-14", "2023-01-15", "2023-01-17", "2023-01-19"]
+    # reportSuffix = ["2023-01-01", "2023-01-04", "2023-01-06", "2023-01-08", "2023-01-11"]
+    reportSuffix = ["2023-01-12", "2023-01-14", "2023-01-15", "2023-01-17", "2023-01-19"]
+    # reportSuffix = ["2023-01-21", "2023-01-23"]
+    # reportSuffix = ["2023-01-24", "2023-01-26"]
+    # reportSuffix = ["2023-01-28", "2023-01-30", "2023-01-31"]
+
+    # reportSuffix = ["2023-02-02", "2023-02-04", "2023-02-07", "2023-02-08", "2023-02-10"]
+    # reportSuffix = ["2023-02-12", "2023-02-14", "2023-02-15", "2023-02-17", "2023-02-19", "2023-02-21", "2023-02-22", "2023-02-24", "2023-02-26", "2023-02-28" ]
+
+    # reportSuffix = ["2023-03-01", "2023-03-03", "2023-03-05", "2023-03-07", "2023-03-08", "2023-03-10", "2023-03-12", "2023-03-14", "2023-03-15", "2023-03-17", "2023-03-19", "2023-03-21", "2023-03-22", "2023-03-24"]
+    # reportSuffix = ["2023-03-26", "2023-03-28"]
+    # reportSuffix = ["2023-04-01"]
 
     clickhouseConnect = connectToClickHouseDB()
     for report in reportSuffix:
@@ -256,7 +288,7 @@ def processReportFiles():
 
 def connectToClickHouseDB():
     try:
-        client = Client.from_url('clickhouse://localhost:9000/default')
+        client = Client.from_url('clickhouse://192.168.0.116:9000/default')
         server_version = client.execute('SELECT version()')
         print("Connected to Clickhouse Server, version: {}".format(server_version[0][0]))
         return client
@@ -282,7 +314,7 @@ def getStationZonesInfo():
     cursor.execute("select database();")
     cursor.fetchone()
 
-    sql_zones_Query = "select id, ituZone FROM main.ft8_stationinfo WHERE ituZone != 0;"
+    sql_zones_Query = "select id, ituZone, grid FROM main.ft8_stationinfo WHERE ituZone != 0;"
 
     cursor.execute(sql_zones_Query)
     dbData = cursor.fetchall()
