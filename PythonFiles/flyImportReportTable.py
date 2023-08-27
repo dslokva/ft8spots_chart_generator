@@ -264,7 +264,8 @@ def aggregate_15min_data(reportSuffix, clickhouseClient):
 
 def processReportFiles():
     # reportSuffix = ["2023-01-01", "2023-01-04", "2023-01-06", "2023-01-08", "2023-01-11"]
-    reportSuffix = ["2023-01-12", "2023-01-14", "2023-01-15", "2023-01-17", "2023-01-19"]
+    # reportSuffix = ["2023-01-12"]
+    #reportSuffix = ["2023-01-14", "2023-01-15", "2023-01-17", "2023-01-19"]
     # reportSuffix = ["2023-01-21", "2023-01-23"]
     # reportSuffix = ["2023-01-24", "2023-01-26"]
     # reportSuffix = ["2023-01-28", "2023-01-30", "2023-01-31"]
@@ -274,7 +275,7 @@ def processReportFiles():
 
     # reportSuffix = ["2023-03-01", "2023-03-03", "2023-03-05", "2023-03-07", "2023-03-08", "2023-03-10", "2023-03-12", "2023-03-14", "2023-03-15", "2023-03-17", "2023-03-19", "2023-03-21", "2023-03-22", "2023-03-24"]
     # reportSuffix = ["2023-03-26", "2023-03-28"]
-    # reportSuffix = ["2023-04-01"]
+    reportSuffix = ["2023-04-01"]
 
     clickhouseConnect = connectToClickHouseDB()
     for report in reportSuffix:
