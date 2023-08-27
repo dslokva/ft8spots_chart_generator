@@ -1,0 +1,403 @@
+"prefix","entity","cont","itu","cq","entity_code","deleted"
+(1),Spratly Is.,AS,50,26,247,0
+1A(1),Sovereign Military Order of Malta,EU,28,15,246,0
+3A*,Monaco,EU,27,14,260,0
+"3B6,7",Agalega & St. Brandon Is.,AF,53,39,4,0
+3B8,Mauritius,AF,53,39,165,0
+3B9,Rodrigues I.,AF,53,39,207,0
+3C,Equatorial Guinea,AF,47,36,49,0
+3C0,Annobon I.,AF,52,36,195,0
+3D2*,Fiji,OC,56,32,176,0
+3D2*,Conway Reef,OC,56,32,489,0
+3D2*,Rotuma I.,OC,56,32,460,0
+3DA#,Kingdom of Eswatini,AF,57,38,468,0
+3V*,Tunisia,AF,37,33,474,0
+"3W,XV",Viet Nam,AS,49,26,293,0
+3X,Guinea,AF,46,35,107,0
+3Y*,Bouvet,AF,67,38,24,0
+3Y*,Peter 1 I.,AN,72,12,199,0
+"4J,4K",Azerbaijan,AS,29,21,18,0
+4L*,Georgia,AS,29,21,75,0
+4O(47)*,Montenegro,EU,28,15,514,0
+4S*,Sri Lanka,AS,41,22,315,0
+4U_ITU#*,ITU HQ,EU,28,14,117,0
+4U_UN*,United Nations HQ,NA,8,5,289,0
+4W(44),Timor-Leste,OC,54,28,511,0
+"4X,4Z#*",Israel,AS,39,20,336,0
+5A,Libya,AF,38,34,436,0
+"5B,C4,P3*",Cyprus,AS,39,20,215,0
+"5H,5I*",Tanzania,AF,53,37,470,0
+5N*,Nigeria,AF,46,35,450,0
+5R,Madagascar,AF,53,39,438,0
+5T(2),Mauritania,AF,46,35,444,0
+5U(3),Niger,AF,46,35,187,0
+5V,Togo,AF,46,35,483,0
+5W*,Samoa,OC,62,32,190,0
+5X*,Uganda,AF,48,37,286,0
+"5Y,5Z*",Kenya,AF,48,37,430,0
+"6V,6W(4)*",Senegal,AF,46,35,456,0
+6Y#*,Jamaica,NA,11,8,82,0
+7O(5),Yemen,AS,39,21,492,0
+7P,Lesotho,AF,57,38,432,0
+7Q,Malawi,AF,53,37,440,0
+7T-7Y*,Algeria,AF,37,33,400,0
+8P*,Barbados,NA,11,8,62,0
+8Q,Maldives,"AS,AF",41,22,159,0
+8R#*,Guyana,SA,12,9,129,0
+9A(6)*,Croatia,EU,28,15,497,0
+9G(7)#*,Ghana,AF,46,35,424,0
+9H*,Malta,EU,28,15,257,0
+"9I,9J*",Zambia,AF,53,36,482,0
+9K*,Kuwait,AS,39,21,348,0
+9L#,Sierra Leone,AF,46,35,458,0
+"9M2,4(8)*",West Malaysia,AS,54,28,299,0
+"9M6,8(8)*",East Malaysia,OC,54,28,46,0
+9N,Nepal,AS,42,22,369,0
+9Q-9T*,Democratic Republic of the Congo,AF,52,36,414,0
+9U(9),Burundi,AF,52,36,404,0
+9V(10)*,Singapore,AS,54,28,381,0
+9X(9),Rwanda,AF,52,36,454,0
+"9Y,9Z#*",Trinidad & Tobago,SA,11,9,90,0
+A2*,Botswana,AF,57,38,402,0
+A3,Tonga,OC,62,32,160,0
+A4*,Oman,AS,39,21,370,0
+A5,Bhutan,AS,41,22,306,0
+A6,United Arab Emirates,AS,39,21,391,0
+A7*,Qatar,AS,39,21,376,0
+A9*,Bahrain,AS,39,21,304,0
+AP*,Pakistan,AS,41,21,372,0
+B*,China,AS,(A),23,24,318,0
+BS7(11),Scarborough Reef,AS,50,27,506,0
+BU-BX*,Taiwan,AS,44,24,386,0
+BV9P(12),Pratas I.,AS,44,24,505,0
+C2,Nauru,OC,65,31,157,0
+C3*,Andorra,EU,27,14,203,0
+C5#,The Gambia,AF,46,35,422,0
+C6,Bahamas,NA,11,8,60,0
+"C8,C9*",Mozambique,AF,53,37,181,0
+CA-CE#*,Chile,SA,"14,16",12,112,0
+CE0#*,Easter I.,SA,63,12,47,0
+CE0#*,Juan Fernandez Is.,SA,14,12,125,0
+CE0#*,San Felix & San Ambrosio,SA,14,12,217,0
+CE9/KC4^*,Antarctica,AN,(B),(C),013,0
+"CM,CO#*",Cuba,NA,11,8,70,0
+CN,Morocco,AF,37,33,446,0
+CP#*,Bolivia,SA,"12,14",10,104,0
+CT*,Portugal,EU,37,14,272,0
+CT3*,Madeira Is.,AF,36,33,256,0
+CU*,Azores,EU,36,14,149,0
+CV-CX#*,Uruguay,SA,14,13,144,0
+CY0*,Sable I.,NA,9,5,211,0
+CY9*,St. Paul I.,NA,9,5,252,0
+"D2,D3",Angola,AF,52,36,401,0
+D4,Cape Verde,AF,46,35,409,0
+D6#*(13),Comoros,AF,53,39,411,0
+DA-DR(14)*,Federal Republic of Germany,EU,28,14,230,0
+"DU-DZ,4D-4I#*",Philippines,OC,50,27,375,0
+E3(15),Eritrea,AF,48,37,51,0
+E4(43),Palestine,AS,39,20,510,0
+E5,North Cook Is.,OC,62,32,191,0
+E5,South Cook Is.,OC,62,32,234,0
+E6*,Niue,OC,62,32,188,0
+E7(29)#*,Bosnia-Herzegovina,EU,28,15,501,0
+EA-EH*,Spain,EU,37,14,281,0
+EA6-EH6*,Balearic Is.,EU,37,14,21,0
+EA8-EH8*,Canary Is.,AF,36,33,29,0
+EA9-EH9*,Ceuta & Melilla,AF,37,33,32,0
+"EI,EJ*",Ireland,EU,27,14,245,0
+EK*,Armenia,AS,29,21,14,0
+EL#*,Liberia,AF,46,35,434,0
+"EP,EQ*",Iran,AS,40,21,330,0
+ER*,Moldova,EU,29,16,179,0
+ES*,Estonia,EU,29,15,52,0
+ET*,Ethiopia,AF,48,37,53,0
+EU-EW*,Belarus,EU,29,16,27,0
+EX*,Kyrgyzstan,AS,"30,31",17,135,0
+EY*,Tajikistan,AS,30,17,262,0
+EZ*,Turkmenistan,AS,30,17,280,0
+F*,France,EU,27,14,227,0
+"FG,TO*",Guadeloupe,NA,11,8,79,0
+"FH,TO(13)*",Mayotte,AF,53,39,169,0
+"FJ,TO(49)*",Saint Barthelemy,NA,11,8,516,0
+"FK,TX*",New Caledonia,OC,56,32,162,0
+"FK,TX(45)",Chesterfield Is.,OC,56,30,512,0
+"FM,TO*",Martinique,NA,11,8,84,0
+"FO,TO(16)*",Austral I.,OC,63,32,508,0
+"FO,TX*",Clipperton I.,NA,10,7,36,0
+"FO,TX*",French Polynesia,OC,63,32,175,0
+"FO,TX(16)*",Marquesas Is.,OC,63,31,509,0
+FP*,St. Pierre & Miquelon,NA,9,5,277,0
+"FR,TO*",Reunion I.,AF,53,39,453,0
+"FT/G,TO(17)*",Glorioso Is.,AF,53,39,99,0
+"FT/J,E,TO(17)*","Juan de Nova, Europa",AF,53,39,124,0
+"FT/T,TO*",Tromelin I.,AF,53,39,276,0
+"FS,TO*",Saint Martin,NA,11,8,213,0
+FT/W*,Crozet I.,AF,68,39,41,0
+FT/X*,Kerguelen Is.,AF,68,39,131,0
+FT/Z*,Amsterdam & St. Paul Is.,AF,68,39,10,0
+FW*,Wallis & Futuna Is.,OC,62,32,298,0
+FY*,French Guiana,SA,12,9,63,0
+"G,GX,M*",England,EU,27,14,223,0
+"GD,GT*",Isle of Man,EU,27,14,114,0
+"GI,GN*",Northern Ireland,EU,27,14,265,0
+"GJ,GH*",Jersey,EU,27,14,122,0
+"GM,GS*",Scotland,EU,27,14,279,0
+"GU,GP*",Guernsey,EU,27,14,106,0
+"GW,GC*",Wales,EU,27,14,294,0
+H4*,Solomon Is.,OC,51,28,185,0
+H40(18)*,Temotu Province,OC,51,32,507,0
+"HA,HG*",Hungary,EU,28,15,239,0
+HB*,Switzerland,EU,28,14,287,0
+HB0*,Liechtenstein,EU,28,14,251,0
+"HC,HD#*",Ecuador,SA,12,10,120,0
+"HC8,HD8#*",Galapagos Is.,SA,12,10,71,0
+HH#,Haiti,NA,11,8,78,0
+HI#*,Dominican Republic,NA,11,8,72,0
+"HJ,HK,5J,5K#*",Colombia,SA,12,9,116,0
+HK0#*,Malpelo I.,SA,12,9,161,0
+HK0#*,San Andres & Providencia,NA,11,7,216,0
+"HL,6K-6N*",Republic of Korea,AS,44,25,137,0
+"HO,HP#*",Panama,NA,11,7,88,0
+"HQ,HR#*",Honduras,NA,11,7,80,0
+"HS,E2*",Thailand,AS,49,26,387,0
+HV,Vatican,EU,28,15,295,0
+HZ*,Saudi Arabia,AS,39,21,378,0
+I*,Italy,EU,28,"15,33",248,0
+"IS0,IM0*",Sardinia,EU,28,15,225,0
+J2*,Djibouti,AF,48,37,382,0
+J3#*,Grenada,NA,11,8,77,0
+J5,Guinea-Bissau,AF,46,35,109,0
+J6#*,St. Lucia,NA,11,8,97,0
+J7#*,Dominica,NA,11,8,95,0
+J8#,St. Vincent,NA,11,8,98,0
+"JA-JS,7J-7N*",Japan,AS,45,25,339,0
+JD1(19)*,Minami Torishima,OC,90,27,177,0
+JD1(20)*,Ogasawara,AS,45,27,192,0
+JT-JV*,Mongolia,AS,"32,33",23,363,0
+JW*,Svalbard,EU,18,40,259,0
+JX*,Jan Mayen,EU,18,40,118,0
+JY#*,Jordan,AS,39,20,342,0
+"K,W,N,AA-AK#",United States of America,NA,"06-08","03-05",291,0
+KG4#,Guantanamo Bay,NA,11,8,105,0
+KH0#,Mariana Is.,OC,64,27,166,0
+KH1#,Baker & Howland Is.,OC,61,31,20,0
+KH2#*,Guam,OC,64,27,103,0
+KH3#*,Johnston I.,OC,61,31,123,0
+KH4#,Midway I.,OC,61,31,174,0
+KH5#,Palmyra & Jarvis Is.,OC,"61,62",31,197,0
+"KH6,7#*",Hawaii,OC,61,31,110,0
+KH7K#,Kure I.,OC,61,31,138,0
+KH8#*,American Samoa,OC,62,32,9,0
+KH8(48)#*,Swains I.,OC,62,32,515,0
+KH9#,Wake I.,OC,65,31,297,0
+"KL,AL,NL,WL#*",Alaska,NA,"01,02",01,006,0
+KP1#,Navassa I.,NA,11,8,182,0
+KP2#*,Virgin Is.,NA,11,8,285,0
+"KP3,4#*",Puerto Rico,NA,11,8,202,0
+KP5(22)#,Desecheo I.,NA,11,8,43,0
+LA-LN*,Norway,EU,18,14,266,0
+LO-LW#*,Argentina,SA,"14,16",13,100,0
+LX*,Luxembourg,EU,27,14,254,0
+LY*,Lithuania,EU,29,15,146,0
+LZ*,Bulgaria,EU,28,20,212,0
+OA-OC#*,Peru,SA,12,10,136,0
+OD*,Lebanon,AS,39,20,354,0
+OE#*,Austria,EU,28,15,206,0
+OF-OI*,Finland,EU,18,15,224,0
+OH0*,Aland Is.,EU,18,15,5,0
+OJ0*,Market Reef,EU,18,15,167,0
+OK-OL(23)*,Czech Republic,EU,28,15,503,0
+OM(23)*,Slovak Republic,EU,28,15,504,0
+ON-OT*,Belgium,EU,27,14,209,0
+"OU-OW,OZ*",Denmark,EU,18,14,221,0
+OX*,Greenland,NA,"05,75",40,237,0
+OY*,Faroe Is.,EU,18,14,222,0
+P2(24),Papua New Guinea,OC,51,28,163,0
+P4(25)*,Aruba,SA,11,9,91,0
+P5(26),Democratic People's Rep. of Korea,AS,44,25,344,0
+PA-PI*,Netherlands,EU,27,14,263,0
+PJ2(50),Curacao,SA,11,9,517,0
+PJ4(51),Bonaire,SA,11,9,520,0
+"PJ5,6(52)",Saba & St. Eustatius,NA,11,8,519,0
+PJ7(53),Sint Maarten,NA,11,8,518,0
+"PP-PY,ZV-ZZ#*",Brazil,SA,(D),11,108,0
+PP0-PY0F#*,Fernando de Noronha,SA,13,11,56,0
+PP0-PY0S#*,St. Peter & St. Paul Rocks,SA,13,11,253,0
+PP0-PY0T#*,Trindade & Martim Vaz Is.,SA,15,11,273,0
+PZ,Suriname,SA,12,9,140,0
+R1/F*,Franz Josef Land,EU,75,40,61,0
+"S0(1),(27)",Western Sahara,AF,46,33,302,0
+S2*,Bangladesh,AS,41,22,305,0
+S5(6)*,Slovenia,EU,28,15,499,0
+S7,Seychelles,AF,53,39,379,0
+S9,Sao Tome & Principe,AF,47,36,219,0
+"SA-SM,7S,8S*",Sweden,EU,18,14,284,0
+SN-SR*,Poland,EU,28,15,269,0
+ST,Sudan,AF,"47,48",34,466,0
+SU,Egypt,AF,38,34,478,0
+"SV-SZ,J4*",Greece,EU,28,20,236,0
+SV/A*,Mount Athos,EU,28,20,180,0
+"SV5,J45*",Dodecanese,EU,28,20,45,0
+"SV9,J49*",Crete,EU,28,20,40,0
+T2(28),Tuvalu,OC,65,31,282,0
+T30,W. Kiribati (Gilbert Is. ),OC,65,31,301,0
+T31,C. Kiribati (British Phoenix Is.),OC,62,31,31,0
+T32,E. Kiribati (Line Is.),OC,"61,63",31,48,0
+T33,Banaba I. (Ocean I.),OC,65,31,490,0
+"T5,6O",Somalia,AF,48,37,232,0
+T7*,San Marino,EU,28,15,278,0
+"T8,(21)",Palau,OC,64,27,22,0
+TA-TC*,Turkey,"EU,AS",39,20,390,0
+TF*,Iceland,EU,17,40,242,0
+"TG,TD#*",Guatemala,NA,12,7,76,0
+"TI,TE#*",Costa Rica,NA,11,7,308,0
+TI9#*,Cocos I.,NA,12,7,37,0
+TJ,Cameroon,AF,47,36,406,0
+TK*,Corsica,EU,28,15,214,0
+TL(30),Central Africa,AF,47,36,408,0
+TN(31),Republic of the Congo,AF,52,36,412,0
+TR(32)*,Gabon,AF,52,36,420,0
+TT(33),Chad,AF,47,36,410,0
+TU(34),Cote d'Ivoire,AF,46,35,428,0
+TY(35),Benin,AF,46,35,416,0
+TZ(36)*,Mali,AF,46,35,442,0
+"UA-UI1-7,RA-RZ*",European Russia,EU,(E),16,54,0
+"UA2,RA2*",Kaliningrad,EU,29,15,126,0
+"UA-UI8-0,RA-RZ*",Asiatic Russia,AS,(F),(G),15,0
+UJ-UM,Uzbekistan,AS,30,17,292,0
+UN-UQ*,Kazakhstan,AS,"29,31",17,130,0
+"UR-UZ,EM-EO*",Ukraine,EU,29,16,288,0
+V2#*,Antigua & Barbuda,NA,11,8,94,0
+V3#,Belize,NA,11,7,66,0
+V4(37)#,St. Kitts & Nevis,NA,11,8,249,0
+V5*,Namibia,AF,57,38,464,0
+V6(38),Micronesia,OC,65,27,173,0
+V7#*,Marshall Is.,OC,65,31,168,0
+V8*,Brunei Darussalam,OC,54,28,345,0
+"VA-VG,VO,VY#*",Canada,NA,(H),01-05,1,0
+"VK,AX#*",Australia,OC,(I),"29,30",150,0
+VK0#*,Heard I.,AF,68,39,111,0
+VK0#*,Macquarie I.,OC,60,30,153,0
+VK9C#*,Cocos (Keeling) Is.,OC,54,29,38,0
+VK9L#*,Lord Howe I.,OC,60,30,147,0
+VK9M#*,Mellish Reef,OC,56,30,171,0
+VK9N*,Norfolk I.,OC,60,32,189,0
+VK9W#*,Willis I.,OC,55,30,303,0
+VK9X#*,Christmas I.,OC,54,29,35,0
+VP2E(37),Anguilla,NA,11,8,12,0
+VP2M(37),Montserrat,NA,11,8,96,0
+VP2V(37)*,British Virgin Is.,NA,11,8,65,0
+VP5*,Turks & Caicos Is.,NA,11,8,89,0
+VP6#*,Pitcairn I.,OC,63,32,172,0
+VP6(46)*,Ducie I.,OC,63,32,513,0
+VP8*,Falkland Is.,SA,16,13,141,0
+"VP8,LU*",South Georgia I.,SA,73,13,235,0
+"VP8,LU*",South Orkney Is.,SA,73,13,238,0
+"VP8,LU*",South Sandwich Is.,SA,73,13,240,0
+"VP8,LU,CE9,HF0,4K1*",South Shetland Is.,SA,73,13,241,0
+VP9*,Bermuda,NA,11,5,64,0
+VQ9*,Chagos Is.,AF,41,39,33,0
+VR*,Hong Kong,AS,44,24,321,0
+VU*,India,AS,41,22,324,0
+VU4*,Andaman & Nicobar Is.,AS,49,26,11,0
+VU7*,Lakshadweep Is.,AS,41,22,142,0
+XA-XI#*,Mexico,NA,10,6,50,0
+XA4-XI4#*,Revillagigedo,NA,10,6,204,0
+XT(39)*,Burkina Faso,AF,46,35,480,0
+XU,Cambodia,AS,49,26,312,0
+XW,Laos,AS,49,26,143,0
+XX9*,Macao,AS,44,24,152,0
+"XY,XZ",Myanmar,AS,49,26,309,0
+"YA,T6",Afghanistan,AS,40,21,3,0
+YB-YH(40)*,Indonesia,OC,"51,54",28,327,0
+YI*,Iraq,AS,39,21,333,0
+YJ*,Vanuatu,OC,56,32,158,0
+YK*,Syria,AS,39,20,384,0
+YL*,Latvia,EU,29,15,145,0
+"YN,H6-7,HT#*",Nicaragua,NA,11,7,86,0
+YO-YR*,Romania,EU,28,20,275,0
+"YS,HU#*",El Salvador,NA,11,7,74,0
+"YT,YU*",Serbia,EU,28,15,296,0
+"YV-YY,4M#*",Venezuela,SA,12,9,148,0
+YV0#*,Aves I.,NA,11,8,17,0
+Z2,Zimbabwe,AF,53,38,452,0
+Z3(41)*,North Macedonia (Republic of),EU,28,15,502,0
+"Z6(1),(55)",Republic of Kosovo,EU,28,15,522,0
+Z8(54),South Sudan (Republic of),AF,48,34,521,0
+ZA,Albania,EU,28,15,7,0
+ZB2*,Gibraltar,EU,37,14,233,0
+ZC4(42)*,UK Sovereign Base Areas on Cyprus,AS,39,20,283,0
+ZD7*,St. Helena,AF,66,36,250,0
+ZD8*,Ascension I.,AF,66,36,205,0
+ZD9,Tristan da Cunha & Gough I.,AF,66,38,274,0
+ZF*,Cayman Is.,NA,11,8,69,0
+ZK3*,Tokelau Is.,OC,62,31,270,0
+ZL-ZM*,New Zealand,OC,60,32,170,0
+ZL7*,Chatham Is.,OC,60,32,34,0
+ZL8*,Kermadec Is.,OC,60,32,133,0
+ZL9*,New Zealand Subantarctic Islands,OC,60,32,16,0
+ZP#*,Paraguay,SA,14,11,132,0
+ZR-ZU#*,South Africa,AF,57,38,462,0
+ZS8*,Prince Edward & Marion Is.,AF,57,38,201,0
+(2),Blenheim Reef,AF,41,39,23,1
+(3),Geyser Reef,AF,53,39,93,1
+(4),Abu Ail Is.,AS,39,21,2,1
+"1M(1),(5)",Minerva Reef,OC,62,32,178,1
+4W(6),Yemen Arab Republic,AS,39,21,154,1
+7J1(7),Okino Tori-shima,AS,45,27,194,1
+8Z4(8),Saudi Arabia/Iraq Neutral Zone,AS,39,21,226,1
+"8Z5,9K3(9)",Kuwait/Saudi Arabia Neutral Zone,AS,39,21,68,1
+9S4(10),Saar,EU,28,14,210,1
+9U5(11),Ruanda-Urundi,AF,52,36,208,1
+"AC3(1),(12)",Sikkim,AS,41,22,231,1
+"AC4(1),(13)",Tibet,AS,41,23,268,1
+C9(14),Manchuria,AS,33,24,164,1
+CN2(15),Tangier,AF,37,33,264,1
+CR8(16),"Damao, Diu",AS,41,22,42,1
+CR8(16),Goa,AS,41,22,101,1
+"CR8,CR10(17)",Portuguese Timor,OC,54,28,200,1
+DA-DM(18),Germany,EU,28,14,81,1
+"DM,Y2-9(19)",German Democratic Republic,EU,28,14,229,1
+EA9(20),Ifni,AF,37,33,113,1
+FF(21),French West Africa,AF,46,35,59,1
+"FH,FB8(22)",Comoros,AF,53,39,39,1
+FI8(23),French Indo-China,AS,49,26,58,1
+FN8(24),French India,AS,41,22,67,1
+FQ8(25),French Equatorial Africa,AF,"47,52",36,57,1
+HK0(26),Bajo Nuevo,NA,11,8,19,1
+"HK0,KP3,KS4(26)",Serrana Bank & Roncador Cay,NA,11,7,228,1
+I1(27),Trieste,EU,28,15,271,1
+I5(28),Italian Somaliland,AF,48,37,115,1
+JZ0(29),Netherlands New Guinea,OC,51,28,184,1
+KH5K(30),Kingman Reef,OC,61,31,134,1
+"KR6,8,JR6,KA6(31)",Okinawa (Ryukyu Is.),AS,45,25,193,1
+KS4(32),Swan Is.,NA,11,7,261,1
+KZ5(33),Canal Zone,NA,11,7,28,1
+OK-OM(34),Czechoslovakia,EU,28,15,218,1
+"P2,VK9(35)",Papua Territory,OC,51,28,198,1
+"P2,VK9(35)",Territory of New Guinea,OC,51,28,267,1
+PJ(36),"Bonaire, Curacao",SA,11,9,85,1
+PJ(36),"St. Maarten, Saba, St. Eustatius",NA,11,8,255,1
+PK1-3(37),Java,OC,54,28,119,1
+PK4(37),Sumatra,OC,54,28,258,1
+PK5(37),Netherlands Borneo,OC,54,28,183,1
+PK6(37),Celebe & Molucca Is.,OC,54,28,30,1
+R1/M(52),Malyj Vysotskij I.,EU,29,16,151,1
+ST0(38),Southern Sudan,AF,"47,48",34,244,1
+UN1(39),Karelo-Finnish Republic,EU,19,16,128,1
+VO(40),"Newfoundland, Labrador",NA,9,"02,05",186,1
+"VQ1,5H1(41)",Zanzibar,AF,53,37,307,1
+VQ6(42),British Somaliland,AF,48,37,26,1
+VQ9(43),Aldabra,AF,53,39,8,1
+VQ9(43),Desroches,AF,53,39,44,1
+VQ9(43),Farquhar,AF,53,39,55,1
+"VS2,9M2(44)",Malaya,AS,54,28,155,1
+VS4(44),Sarawak,OC,54,28,220,1
+"VS9A,P,S(45)",People's Democratic Rep. of Yemen,AS,39,21,243,1
+VS9H(46),Kuria Muria I.,AS,39,21,139,1
+VS9K(47),Kamaran Is.,AS,39,21,127,1
+ZC5(44),British North Borneo,OC,54,28,25,1
+"ZC6,4X1(48)",Palestine,AS,39,20,196,1
+ZD4(49),"Gold Coast, Togoland",AF,46,35,102,1
+"ZS0,1(50)",Penguin Is.,AF,57,38,493,1
+ZS9(51),Walvis Bay,AF,57,38,488,1
