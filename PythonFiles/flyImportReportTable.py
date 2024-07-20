@@ -275,7 +275,7 @@ def processReportFiles():
 
     # reportSuffix = ["2023-03-01", "2023-03-03", "2023-03-05", "2023-03-07", "2023-03-08", "2023-03-10", "2023-03-12", "2023-03-14", "2023-03-15", "2023-03-17", "2023-03-19", "2023-03-21", "2023-03-22", "2023-03-24"]
     # reportSuffix = ["2023-03-26", "2023-03-28"]
-    reportSuffix = ["2023-04-01"]
+    reportSuffix = ["2024-07-14"]
 
     clickhouseConnect = connectToClickHouseDB()
     for report in reportSuffix:
@@ -289,7 +289,7 @@ def processReportFiles():
 
 def connectToClickHouseDB():
     try:
-        client = Client.from_url('clickhouse://192.168.0.116:9000/default')
+        client = Client.from_url('clickhouse:/172.24.68.104:9000/default')
         server_version = client.execute('SELECT version()')
         print("Connected to Clickhouse Server, version: {}".format(server_version[0][0]))
         return client
