@@ -32,8 +32,7 @@ workDir = os.path.dirname(os.path.realpath(__file__))
 
 @benchmark
 def decompressAndAlterReportFile(reportSuffix, dicZones):
-    report_bz2_path = f"d:/Source/ft8spots_chart_generator/ExampleFiles/report-{reportSuffix}.sql.bz2"
-    # report_bz2_path = f"g:/PskReporterDATA/report-{reportSuffix}.sql.bz2"
+    report_bz2_path = f"g:/PskReporterDATA/report-{reportSuffix}.sql.bz2"
     print(f"Start decompressing file: {report_bz2_path}")
 
     spots_path = workDir + f"/../ExampleFiles/spots-sum-grid-ll-{reportSuffix}.csv"
@@ -275,7 +274,7 @@ def processReportFiles():
 
     # reportSuffix = ["2023-03-01", "2023-03-03", "2023-03-05", "2023-03-07", "2023-03-08", "2023-03-10", "2023-03-12", "2023-03-14", "2023-03-15", "2023-03-17", "2023-03-19", "2023-03-21", "2023-03-22", "2023-03-24"]
     # reportSuffix = ["2023-03-26", "2023-03-28"]
-    reportSuffix = ["2024-07-14"]
+    reportSuffix = ["2024-07-02", "2024-07-03", "2024-07-05", "2024-07-07", "2024-07-09", "2024-07-10", "2024-07-12"]
 
     clickhouseConnect = connectToClickHouseDB()
     for report in reportSuffix:
@@ -289,7 +288,7 @@ def processReportFiles():
 
 def connectToClickHouseDB():
     try:
-        client = Client.from_url('clickhouse:/172.24.68.104:9000/default')
+        client = Client.from_url('clickhouse://default:1q2w3e$R@localhost:9001/default')
         server_version = client.execute('SELECT version()')
         print("Connected to Clickhouse Server, version: {}".format(server_version[0][0]))
         return client
