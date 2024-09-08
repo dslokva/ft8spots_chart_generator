@@ -10,7 +10,7 @@ import pytz
 import time
 from functools import wraps
 import maidenhead as mh
-
+import threading
 
 def benchmark(method):
     @wraps(method)
@@ -32,14 +32,14 @@ workDir = os.path.dirname(os.path.realpath(__file__))
 
 @benchmark
 def decompressAndAlterReportFile(reportSuffix, dicZones):
-    report_bz2_path = f"g:/PskReporterDATA/report-{reportSuffix}.sql.bz2"
+    report_bz2_path = f"e:/PskReporterDATA/report-{reportSuffix}.sql.bz2"
     print(f"Start decompressing file: {report_bz2_path}")
 
-    spots_path = workDir + f"/../ExampleFiles/spots-sum-grid-ll-{reportSuffix}.csv"
+    spots_path = f"C:/Users/qmax_/PSKReporterLocal/spots-sum-grid-ll-{reportSuffix}.csv"
     spots_path = spots_path.replace("\\", "/")
     spot_count = 0
     strPrefix = "INSERT INTO `report` VALUES ("
-    #    out_file_header = "spotId,utc,band,zone1,zone2\n"
+    # out_file_header = "spotId,utc,band,zone1,zone2\n"
     # out_file_header = "utc,band,zone1,zone2,dxcc1,dxcc2\n"
     # out_file_header = "utc,band,zone1,zone2,cnt\n"
     out_file_header = "utc,band,zone1,zone2,grid1,grid2,lat1,lon1,lat2,lon2,cnt\n"
@@ -75,7 +75,7 @@ def decompressAndAlterReportFile(reportSuffix, dicZones):
                                     if len(bunch) == bunchsize:
                                         out_file.writelines(bunch)
                                         bunch = []
-                                        print(f"Spot bulk write into csv file, row count: {spot_count}")
+                                        print(f"Spot bulk write into csv file {reportSuffix}, row count: {spot_count}")
                 out_file.writelines(bunch)
                 out_file.close()
                 return out_file.name
@@ -154,7 +154,7 @@ def determineUTCminMax(reportSuffix, clickhouseClient):
 @benchmark
 def process_report_dump_file(reportSuffix, clickhouseClient):
     if clickhouseClient:
-        out_file_name = 'd:/Source/ft8spots_chart_generator/ExampleFiles/spots-sum-grid-ll-' + reportSuffix + '.csv'
+        out_file_name = 'C:/Users/qmax_/PSKReporterLocal/spots-sum-grid-ll-' + reportSuffix + '.csv'
         tableSuffix = reportSuffix[:7].replace("-","_")
 
         # simple exists check
@@ -198,7 +198,7 @@ def process_report_dump_file(reportSuffix, clickhouseClient):
         }
         bypass = lambda x: x
 
-        batch_size = 2048000
+        batch_size = 4096000
         count = 0
         flush_list = []
 
@@ -211,12 +211,12 @@ def process_report_dump_file(reportSuffix, clickhouseClient):
                 count += 1
                 if count == batch_size:
                     clickhouseClient.execute(f'INSERT INTO default.spots_sum_grid_ll_{tableSuffix} VALUES', flush_list)
-                    print(f"Processed chunk #{i}, total count: {batch_size*i}")
+                    print(f"Processed chunk #{i} for file {reportSuffix}, total count: {batch_size*i}")
                     flush_list = []
                     count = 0
                     i += 1
             clickhouseClient.execute(f'INSERT INTO default.spots_sum_grid_ll_{tableSuffix} VALUES', flush_list)
-            print(f"Processed chunk #{i}, total count: {count}")
+            print(f"Processed chunk #{i} for file {reportSuffix}, total count: {count}")
 
         print(f"Report {out_file_name} upload to clickhouse complete.")
     else:
@@ -274,12 +274,29 @@ def processReportFiles():
 
     # reportSuffix = ["2023-03-01", "2023-03-03", "2023-03-05", "2023-03-07", "2023-03-08", "2023-03-10", "2023-03-12", "2023-03-14", "2023-03-15", "2023-03-17", "2023-03-19", "2023-03-21", "2023-03-22", "2023-03-24"]
     # reportSuffix = ["2023-03-26", "2023-03-28"]
-    reportSuffix = ["2024-07-02", "2024-07-03", "2024-07-05", "2024-07-07", "2024-07-09", "2024-07-10", "2024-07-12"]
 
-    clickhouseConnect = connectToClickHouseDB()
+    # reportSuffix = ["2024-07-02", "2024-07-03"]
+    reportSuffix = ["2024-07-05", "2024-07-07", "2024-07-09", "2024-07-10"]
+
+    # reportSuffix = ["2024-07-12", "2024-07-16", "2024-07-17", "2024-07-19"]
+
+    # reportSuffix = ["2024-07-21", "2024-07-23", "2024-07-24", "2024-07-26"]
+
+    # reportSuffix = ["2024-07-28", "2024-07-30", "2024-07-31", "2024-08-02"]
+
+
+    threads = []
     for report in reportSuffix:
-        if process_report_dump_file(report, clickhouseConnect):
-           pass
+        clickhouseConnect = connectToClickHouseDB()
+        # process_report_dump_file(report, clickhouseConnect)
+
+        thread = threading.Thread(target=process_report_dump_file, args=(report, clickhouseConnect,))
+        threads.append(thread)
+        thread.start()
+
+        # for thread in threads:
+        #     thread.join()
+
         # TODO: change to month calc
         # aggregate_15min_data(month, clickhouseConnect)
         # thread = Thread(target=process_report_dump_file, args=(report, connectToClickHouseDB(),))
@@ -288,7 +305,7 @@ def processReportFiles():
 
 def connectToClickHouseDB():
     try:
-        client = Client.from_url('clickhouse://default:1q2w3e$R@localhost:9001/default')
+        client = Client.from_url('clickhouse://default:1q2w3e$R@192.168.88.23:9001/default')
         server_version = client.execute('SELECT version()')
         print("Connected to Clickhouse Server, version: {}".format(server_version[0][0]))
         return client
@@ -298,7 +315,7 @@ def connectToClickHouseDB():
 
 def connectToMySQLDB(schemaName):
     try:
-        connection = mysql.connector.connect(host='localhost', database=schemaName, user='root', password='1q2w3e$R')
+        connection = mysql.connector.connect(host='192.168.88.23', database=schemaName, user='root', password='1q2w3e$R')
         if connection.is_connected():
             db_Info = connection.get_server_info()
             print("Connected to MySQL Server, version: {}".format(db_Info))
