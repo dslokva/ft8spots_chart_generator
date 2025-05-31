@@ -11,7 +11,7 @@ chart_gen.SquareToItuZone.argtypes = [ctypes.c_wchar_p]
 commit_part_count = 1000
 
 try:
-    connection = mysql.connector.connect(host='10.169.11.200', database='main', user='user', password='1q2w3e$R')
+    connection = mysql.connector.connect(host='localhost', database='main', user='root', password='1q2w3e$R')
     if connection.is_connected():
         db_Info = connection.get_server_info()
         print("Connected to MySQL Server version ", db_Info)

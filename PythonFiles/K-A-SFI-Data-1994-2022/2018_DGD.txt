@@ -1,10 +1,10 @@
 :Product: Daily Geomagnetic Data     2018_DGD.txt
-:Issued: 0000 UT 01 Jan 2019
+:Issued: 1800 UT 28 Jan 2019
 #
 #  Prepared by the U.S. Dept. of Commerce, NOAA, Space Weather Prediction Center
 #  Please send comment and suggestions to SWPC.Webmaster@noaa.gov
 #
-#             Quarterly Daily Geomagnetic Data
+#             Current Quarter Daily Geomagnetic Data
 #
 #
 #                Middle Latitude        High Latitude            Estimated

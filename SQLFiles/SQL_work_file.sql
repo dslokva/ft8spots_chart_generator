@@ -129,17 +129,17 @@ ORDER BY interval_start ASC;
 --            PRIMARY KEY (utc, band, zone1, zone2);
 
 
-
-SELECT grid1, grid2, geoDistance(lon1, lat1, lon2, lat2)/1000 as kmDistance
-FROM default.spots_sum_grid_ll_2024_07
-WHERE band = '160m'
-GROUP BY grid1, grid2, lon1, lat1, lon2, lat2
-ORDER BY kmDistance DESC
-
-
+	
+	SELECT grid1, grid2, geoDistance(lon1, lat1, lon2, lat2)/1000 as kmDistance
+	FROM default.spots_sum_grid_ll_2024_07
+	WHERE band = '30m'
+	GROUP BY grid1, grid2, lon1, lat1, lon2, lat2
+	ORDER BY kmDistance DESC
 
 
-SELECT lat1, lon1, sum(cnt) as cnt1 FROM default.spots_sum_grid_ll_2023_01 WHERE band = '160m' GROUP BY lat1, lon1 HAVING cnt1 > 5
+
+
+SELECT lat1, lon1, sum(cnt) as cnt1 FROM default.spots_sum_grid_ll_2024_07 WHERE band = '30m' GROUP BY lat1, lon1 HAVING cnt1 > 750
 
 
 

@@ -32,7 +32,7 @@ workDir = os.path.dirname(os.path.realpath(__file__))
 
 @benchmark
 def decompressAndAlterReportFile(reportSuffix, dicZones):
-    report_bz2_path = f"e:/PskReporterDATA/report-{reportSuffix}.sql.bz2"
+    report_bz2_path = f"f:/PskReporterDATA/report-{reportSuffix}.sql.bz2"
     print(f"Start decompressing file: {report_bz2_path}")
 
     spots_path = f"C:/Users/qmax_/PSKReporterLocal/spots-sum-grid-ll-{reportSuffix}.csv"
@@ -43,7 +43,7 @@ def decompressAndAlterReportFile(reportSuffix, dicZones):
     # out_file_header = "utc,band,zone1,zone2,dxcc1,dxcc2\n"
     # out_file_header = "utc,band,zone1,zone2,cnt\n"
     out_file_header = "utc,band,zone1,zone2,grid1,grid2,lat1,lon1,lat2,lon2,cnt\n"
-    bunchsize = 512000  # Experiment with different sizes
+    bunchsize = 1912000  # Experiment with different sizes
     bunch = []
 
     # if altered report file not exists - will make it
@@ -198,7 +198,7 @@ def process_report_dump_file(reportSuffix, clickhouseClient):
         }
         bypass = lambda x: x
 
-        batch_size = 4096000
+        batch_size = 1696000
         count = 0
         flush_list = []
 
@@ -264,7 +264,7 @@ def aggregate_15min_data(reportSuffix, clickhouseClient):
 def processReportFiles():
     # reportSuffix = ["2023-01-01", "2023-01-04", "2023-01-06", "2023-01-08", "2023-01-11"]
     # reportSuffix = ["2023-01-12"]
-    #reportSuffix = ["2023-01-14", "2023-01-15", "2023-01-17", "2023-01-19"]
+    # reportSuffix = ["2023-01-14", "2023-01-15", "2023-01-17", "2023-01-19"]
     # reportSuffix = ["2023-01-21", "2023-01-23"]
     # reportSuffix = ["2023-01-24", "2023-01-26"]
     # reportSuffix = ["2023-01-28", "2023-01-30", "2023-01-31"]
@@ -276,14 +276,14 @@ def processReportFiles():
     # reportSuffix = ["2023-03-26", "2023-03-28"]
 
     # reportSuffix = ["2024-07-02", "2024-07-03"]
-    reportSuffix = ["2024-07-05", "2024-07-07", "2024-07-09", "2024-07-10"]
+    # reportSuffix = ["2024-07-05", "2024-07-07", "2024-07-09", "2024-07-10"]
+    # reportSuffix = ["2024-07-12", "2024-07-16", "2024-07-17", "2024-07-19", "2024-07-21"]
 
-    # reportSuffix = ["2024-07-12", "2024-07-16", "2024-07-17", "2024-07-19"]
+    # reportSuffix = ["2024-07-23", "2024-07-24", "2024-07-26"]
 
-    # reportSuffix = ["2024-07-21", "2024-07-23", "2024-07-24", "2024-07-26"]
+    # reportSuffix = ["2024-07-28", "2024-07-30", "2024-07-31", "2024-08-02", "2024-08-04", "2024-08-06", "2024-08-07", "2024-08-09", "2024-08-11"]
 
-    # reportSuffix = ["2024-07-28", "2024-07-30", "2024-07-31", "2024-08-02"]
-
+    reportSuffix = ["2024-08-13"]
 
     threads = []
     for report in reportSuffix:
@@ -305,7 +305,7 @@ def processReportFiles():
 
 def connectToClickHouseDB():
     try:
-        client = Client.from_url('clickhouse://default:1q2w3e$R@192.168.88.23:9001/default')
+        client = Client.from_url('clickhouse://default:1q2w3e$R@172.27.188.228:9000/default')
         server_version = client.execute('SELECT version()')
         print("Connected to Clickhouse Server, version: {}".format(server_version[0][0]))
         return client
@@ -315,7 +315,7 @@ def connectToClickHouseDB():
 
 def connectToMySQLDB(schemaName):
     try:
-        connection = mysql.connector.connect(host='192.168.88.23', database=schemaName, user='root', password='1q2w3e$R')
+        connection = mysql.connector.connect(host='localhost', database=schemaName, user='root', password='1q2w3e$R')
         if connection.is_connected():
             db_Info = connection.get_server_info()
             print("Connected to MySQL Server, version: {}".format(db_Info))

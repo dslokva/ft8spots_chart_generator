@@ -1,0 +1,105 @@
+:Product: Geophysical Alert Message wwv.txt
+:Issued: 2024 Jul 19 2115 UTC
+
+# Prepared by the US Dept. of Commerce, NOAA, Space Weather Prediction Center
+# Please send comments and suggestions to SWPC.Webmaster@noaa.gov
+# 3-hourly messages issued this UT day.
+#
+#                    Geophysical Alert Message
+#
+#-----------------------------------------------------------------
+
+Solar-terrestrial indices for 18 July follow.
+Solar flux 209 and estimated planetary A-index 5.
+The estimated planetary K-index at 0000 UTC on 19 July was 1.00.
+
+Space weather for the past 24 hours has been minor.
+Radio blackouts reaching the R1 level occurred.
+
+Space weather for the next 24 hours is predicted to be minor.
+Radio blackouts reaching the R1 level are likely.
+
+#-----------------------------------------------------------------
+
+Solar-terrestrial indices for 18 July follow.
+Solar flux 209 and estimated planetary A-index 5.
+The estimated planetary K-index at 0300 UTC on 19 July was 1.00.
+
+Space weather for the past 24 hours has been minor.
+Radio blackouts reaching the R1 level occurred.
+
+Space weather for the next 24 hours is predicted to be minor.
+Radio blackouts reaching the R1 level are likely.
+
+#-----------------------------------------------------------------
+
+Solar-terrestrial indices for 18 July follow.
+Solar flux 209 and estimated planetary A-index 5.
+The estimated planetary K-index at 0600 UTC on 19 July was 1.33.
+
+Space weather for the past 24 hours has been minor.
+Radio blackouts reaching the R1 level occurred.
+
+Space weather for the next 24 hours is predicted to be minor.
+Radio blackouts reaching the R1 level are likely.
+
+#-----------------------------------------------------------------
+
+Solar-terrestrial indices for 18 July follow.
+Solar flux 209 and estimated planetary A-index 5.
+The estimated planetary K-index at 0900 UTC on 19 July was 1.67.
+
+Space weather for the past 24 hours has been minor.
+Radio blackouts reaching the R1 level occurred.
+
+Space weather for the next 24 hours is predicted to be minor.
+Radio blackouts reaching the R1 level are likely.
+
+#-----------------------------------------------------------------
+
+Solar-terrestrial indices for 18 July follow.
+Solar flux 209 and estimated planetary A-index 5.
+The estimated planetary K-index at 1200 UTC on 19 July was 1.33.
+
+Space weather for the past 24 hours has been minor.
+Radio blackouts reaching the R1 level occurred.
+
+Space weather for the next 24 hours is predicted to be minor.
+Radio blackouts reaching the R1 level are likely.
+
+#-----------------------------------------------------------------
+
+Solar-terrestrial indices for 18 July follow.
+Solar flux 209 and estimated planetary A-index 5.
+The estimated planetary K-index at 1500 UTC on 19 July was 1.33.
+
+Space weather for the past 24 hours has been minor.
+Radio blackouts reaching the R1 level occurred.
+
+Space weather for the next 24 hours is predicted to be minor.
+Radio blackouts reaching the R1 level are likely.
+
+#-----------------------------------------------------------------
+
+Solar-terrestrial indices for 18 July follow.
+Solar flux 209 and estimated planetary A-index 5.
+The estimated planetary K-index at 1800 UTC on 19 July was 1.00.
+
+Space weather for the past 24 hours has been minor.
+Radio blackouts reaching the R1 level occurred.
+
+Space weather for the next 24 hours is predicted to be minor.
+Radio blackouts reaching the R1 level are likely.
+
+#-----------------------------------------------------------------
+
+Solar-terrestrial indices for 19 July follow.
+Solar flux 202 and estimated planetary A-index 6.
+The estimated planetary K-index at 2100 UTC on 19 July was 1.67.
+
+Space weather for the past 24 hours has been minor.
+Radio blackouts reaching the R1 level occurred.
+
+Space weather for the next 24 hours is predicted to be minor.
+Radio blackouts reaching the R1 level are likely.
+
