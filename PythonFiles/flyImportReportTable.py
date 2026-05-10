@@ -1,16 +1,16 @@
 import bz2
 import os
 import sys
+import queue
+import threading
 from csv import DictReader
 import mysql.connector
-from threading import Thread
 from datetime import datetime, timedelta
 from clickhouse_driver import Client
-import pytz
 import time
 from functools import wraps
 import maidenhead as mh
-import threading
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 def benchmark(method):
     @wraps(method)
@@ -251,83 +251,165 @@ def ensure_table_snr_column(table_name, clickhouseClient):
             print(f"Upgraded cnt UInt8→UInt32 in {table_name}")
 
 
+def _decompress_to_queue(reportSuffix: str, q: queue.Queue, batch_size: int, csv_path: str):
+    """
+    Producer: decompress bz2 → parse FT8 rows → push typed batches to q.
+    Also writes csv_path as a checkpoint so the file can be re-uploaded without
+    re-decompressing if ClickHouse upload fails later.
+    Sentinel: q.put(None) on success; q.put(exc) on any error.
+    """
+    report_bz2_path = f"D:/PSKReporterDATA/report-{reportSuffix}.sql.bz2"
+    strPrefix = "INSERT INTO `report` VALUES ("
+    file_size = os.path.getsize(report_bz2_path)
+    progress  = Progress(f"[{reportSuffix}] bz2")
+    print(f"[{reportSuffix}] Decompressing {file_size / 1024**2:.1f} MB  →  {csv_path}")
+
+    try:
+        batch_rows: list = []
+        csv_lines:  list = []
+
+        with open(report_bz2_path, 'rb') as raw_fp, \
+             bz2.BZ2File(raw_fp) as in_file, \
+             open(csv_path, 'w', newline='') as csv_fp:
+
+            csv_fp.write("utc,band,zone1,zone2,grid1,grid2,lat1,lon1,lat2,lon2,cnt,snr\n")
+
+            for line in in_file:
+                line = line.decode()
+                if not line.startswith(strPrefix):
+                    continue
+
+                for record in line[len(strPrefix):-3].split('),('):
+                    fields = record.split(',')
+                    if fields[4] != "'FT8'":
+                        continue
+
+                    zone1 = dicZones.get(int(fields[1]), 0)
+                    zone2 = dicZones.get(int(fields[2]), 0)
+                    if zone1 == 0 or zone2 == 0 or zone1 == zone2:
+                        continue
+
+                    grid1 = str(zone1[1])
+                    grid2 = str(zone2[1])
+                    lat1, lon1 = mh.to_location(grid1)
+                    lat2, lon2 = mh.to_location(grid2)
+                    snr  = int(fields[7]) if fields[7] != 'NULL' else 0
+                    utc  = int(fields[9])
+                    band = fields[14][1:-1]
+
+                    batch_rows.append({
+                        'utc': utc, 'band': band,
+                        'zone1': int(zone1[0]), 'zone2': int(zone2[0]),
+                        'grid1': grid1, 'grid2': grid2,
+                        'lat1': lat1, 'lon1': lon1, 'lat2': lat2, 'lon2': lon2,
+                        'cnt': 1, 'snr': snr,
+                    })
+                    csv_lines.append(
+                        f"{utc},{band},{zone1[0]},{zone2[0]},{grid1},{grid2},"
+                        f"{lat1},{lon1},{lat2},{lon2},1,{snr}\n"
+                    )
+                    progress.update()
+
+                    if len(batch_rows) == batch_size:
+                        csv_fp.writelines(csv_lines)
+                        q.put(batch_rows)       # blocks if consumer is behind (backpressure)
+                        batch_rows = []
+                        csv_lines  = []
+
+                pct = raw_fp.tell() / file_size * 100
+                progress.tick(extra=f"  (file: {pct:.1f}%)")
+
+            if batch_rows:
+                csv_fp.writelines(csv_lines)
+                q.put(batch_rows)
+
+        progress.finish()
+        q.put(None)     # sentinel: decompress done
+
+    except Exception as exc:
+        q.put(exc)      # propagate error to consumer
+
+
 @benchmark
 def process_report_dump_file(reportSuffix, clickhouseClient):
-    if clickhouseClient:
-        out_file_name = 'C:/Users/qmax_/PSKReporterLocal/spots-sum-grid-ll-' + reportSuffix + '.csv'
-        tableSuffix = reportSuffix[:7].replace("-","_")
+    if not clickhouseClient:
+        print("No valid Clickhouse client")
+        return
 
-        # simple exists check
-        if os.path.isfile(out_file_name):
-            print(f"Report {out_file_name} already exists. Skipping processing from bz2 to csv.")
-        else:
-            # Process original bz2 sqldump file and create reduced csv file
-            decompressAndAlterReportFile(reportSuffix, dicZones)
+    out_file_name = f'D:/PSKReporter-temp/spots-sum-grid-ll-{reportSuffix}.csv'
+    tableSuffix   = reportSuffix[:7].replace('-', '_')
+    table_name    = f'spots_sum_grid_ll_{tableSuffix}'
+    batch_size    = 500_000
 
-        clickhouseClient.execute(
-            f'CREATE TABLE IF NOT EXISTS default.spots_sum_grid_ll_{tableSuffix}'
-            '(`utc` Int32, '
-            '`band` String, '
-            '`zone1` Int32, '
-            '`zone2` Int32, '
-            '`grid1` String, '
-            '`grid2` String, '
-            '`lat1` Float64, '
-            '`lon1` Float64, '
-            '`lat2` Float64, '
-            '`lon2` Float64, '
-            '`cnt` UInt32, '
-            '`snr` Int32 '
-            ')ENGINE = SummingMergeTree '
-            'ORDER BY (utc, band, zone1, zone2, grid1, grid2, lat1, lon1, lat2, lon2) '
-            'PARTITION BY toYYYYMMDD(toDateTime(utc)) '
-            'PRIMARY KEY (utc, band, zone1, zone2, grid1, grid2, lat1, lon1, lat2, lon2); ')
+    clickhouseClient.execute(
+        f'CREATE TABLE IF NOT EXISTS default.{table_name}'
+        '(`utc` Int32, `band` String, `zone1` Int32, `zone2` Int32, '
+        '`grid1` String, `grid2` String, '
+        '`lat1` Float64, `lon1` Float64, `lat2` Float64, `lon2` Float64, '
+        '`cnt` UInt32, `snr` Int32) '
+        'ENGINE = SummingMergeTree '
+        'ORDER BY (utc, band, zone1, zone2, grid1, grid2, lat1, lon1, lat2, lon2) '
+        'PARTITION BY toYYYYMMDD(toDateTime(utc)) '
+        'PRIMARY KEY (utc, band, zone1, zone2, grid1, grid2, lat1, lon1, lat2, lon2);'
+    )
+    ensure_table_snr_column(table_name, clickhouseClient)
 
-        ensure_table_snr_column(f'spots_sum_grid_ll_{tableSuffix}', clickhouseClient)
+    def _consume_queue(q: queue.Queue):
+        """Consumer: read batches from q, insert into ClickHouse."""
+        progress = Progress(f"[{reportSuffix}] →CH")
+        chunk = 0
+        while True:
+            item = q.get()
+            if item is None:
+                break
+            if isinstance(item, Exception):
+                raise item
+            chunk += 1
+            clickhouseClient.execute(f'INSERT INTO default.{table_name} VALUES', item)
+            progress.update(len(item))
+            progress.tick(extra=f"  chunk {chunk}", force=True)
+        progress.finish()
 
-        schema = {
-            'utc': int,
-            'zone1': int,
-            'zone2': int,
-            'lat1': float,
-            'lon1': float,
-            'lat2': float,
-            'lon2': float,
-            'cnt': int,
-            'snr': int,
-        }
+    if os.path.isfile(out_file_name):
+        # CSV checkpoint exists — skip decompression, upload straight from file
+        print(f"[{reportSuffix}] CSV checkpoint found, uploading directly.")
+        schema = {'utc': int, 'zone1': int, 'zone2': int,
+                  'lat1': float, 'lon1': float, 'lat2': float, 'lon2': float,
+                  'cnt': int, 'snr': int}
         bypass = lambda x: x
-
-        batch_size = 1696000
-        count = 0
-        flush_list = []
-
-        print(f"[{reportSuffix}] Counting rows in CSV...")
         total_rows   = count_csv_rows(out_file_name)
         total_chunks = max(1, (total_rows + batch_size - 1) // batch_size)
         print(f"[{reportSuffix}] Uploading {total_rows:,} rows → ClickHouse  ({total_chunks} chunk(s))")
-        progress = Progress(f"[{reportSuffix}] →ClickHouse", total=total_rows)
-
+        progress = Progress(f"[{reportSuffix}] →CH", total=total_rows)
+        flush_list = []
+        count = 0
+        chunk = 0
         with open(out_file_name, 'r') as f:
-            csv_gen = ({k: schema.get(k, bypass)(v) for k, v in row.items()} for row in DictReader(f))
-            i = 1
-            for row in csv_gen:
+            for row in ({k: schema.get(k, bypass)(v) for k, v in r.items()} for r in DictReader(f)):
                 flush_list.append(row)
                 count += 1
                 if count == batch_size:
-                    clickhouseClient.execute(f'INSERT INTO default.spots_sum_grid_ll_{tableSuffix} VALUES', flush_list)
+                    chunk += 1
+                    clickhouseClient.execute(f'INSERT INTO default.{table_name} VALUES', flush_list)
                     progress.update(batch_size)
-                    progress.tick(extra=f"  chunk {i}/{total_chunks}", force=True)
+                    progress.tick(extra=f"  chunk {chunk}/{total_chunks}", force=True)
                     flush_list = []
                     count = 0
-                    i += 1
             if flush_list:
-                clickhouseClient.execute(f'INSERT INTO default.spots_sum_grid_ll_{tableSuffix} VALUES', flush_list)
+                clickhouseClient.execute(f'INSERT INTO default.{table_name} VALUES', flush_list)
                 progress.update(len(flush_list))
-
         progress.finish()
     else:
-        print("No valid Clickhouse client")
+        # No checkpoint — pipeline: decompress (thread) + CH upload (this thread) run simultaneously
+        q: queue.Queue = queue.Queue(maxsize=2)   # backpressure: at most 2 batches in flight
+        decomp = threading.Thread(
+            target=_decompress_to_queue,
+            args=(reportSuffix, q, batch_size, out_file_name),
+            daemon=True,
+        )
+        decomp.start()
+        _consume_queue(q)
+        decomp.join()
 
 
 @benchmark
@@ -392,22 +474,23 @@ def processReportFiles():
 
     reportSuffix = ["2024-08-13"]
 
-    threads = []
-    for report in reportSuffix:
-        clickhouseConnect = connectToClickHouseDB()
-        # process_report_dump_file(report, clickhouseConnect)
+    # Each file is handled by one thread. Inside process_report_dump_file a second
+    # daemon thread runs bz2 decompression while this thread uploads to ClickHouse,
+    # so decompress + upload overlap for every file simultaneously.
+    # Cap at 3 concurrent files: more parallel CH inserts do not help throughput
+    # and increase memory pressure on the SummingMergeTree server.
+    workers = min(3, len(reportSuffix))
+    print(f"\n=== Processing {len(reportSuffix)} file(s) with {workers} thread(s) ===")
 
-        thread = threading.Thread(target=process_report_dump_file, args=(report, clickhouseConnect,))
-        threads.append(thread)
-        thread.start()
-
-        # for thread in threads:
-        #     thread.join()
-
-        # TODO: change to month calc
-        # aggregate_15min_data(month, clickhouseConnect)
-        # thread = Thread(target=process_report_dump_file, args=(report, connectToClickHouseDB(),))
-        # thread.start()
+    with ThreadPoolExecutor(max_workers=workers) as pool:
+        futures = {pool.submit(process_report_dump_file, r, connectToClickHouseDB()): r for r in reportSuffix}
+        for f in as_completed(futures):
+            report = futures[f]
+            try:
+                f.result()
+                print(f"[{report}] done")
+            except Exception as exc:
+                print(f"[{report}] FAILED: {exc}")
 
 
 def connectToClickHouseDB():
