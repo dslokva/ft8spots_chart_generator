@@ -3,14 +3,12 @@ import os
 import sys
 from csv import DictReader
 import mysql.connector
-from threading import Thread
 from datetime import datetime, timedelta
 from clickhouse_driver import Client
-import pytz
 import time
 from functools import wraps
 import maidenhead as mh
-import threading
+from concurrent.futures import ProcessPoolExecutor, ThreadPoolExecutor, as_completed
 
 def benchmark(method):
     @wraps(method)
@@ -298,7 +296,7 @@ def process_report_dump_file(reportSuffix, clickhouseClient):
         }
         bypass = lambda x: x
 
-        batch_size = 1696000
+        batch_size = 500_000
         count = 0
         flush_list = []
 
@@ -392,22 +390,41 @@ def processReportFiles():
 
     reportSuffix = ["2024-08-13"]
 
-    threads = []
-    for report in reportSuffix:
-        clickhouseConnect = connectToClickHouseDB()
-        # process_report_dump_file(report, clickhouseConnect)
+    # ── Step 1: decompress bz2 → CSV  (CPU-bound → separate processes) ─────────
+    cpu_workers = max(1, (os.cpu_count() or 2) - 1)
+    print(f"\n=== Step 1: Decompressing {len(reportSuffix)} file(s) with {cpu_workers} process(es) ===")
 
-        thread = threading.Thread(target=process_report_dump_file, args=(report, clickhouseConnect,))
-        threads.append(thread)
-        thread.start()
+    csv_ready = []
+    with ProcessPoolExecutor(max_workers=cpu_workers) as pool:
+        futures = {pool.submit(decompressAndAlterReportFile, r, dicZones): r for r in reportSuffix}
+        for f in as_completed(futures):
+            report = futures[f]
+            try:
+                csv_path = f.result()
+                csv_ready.append(report)
+                print(f"[{report}] decompression done → {csv_path}")
+            except Exception as exc:
+                print(f"[{report}] decompression FAILED: {exc}")
 
-        # for thread in threads:
-        #     thread.join()
+    if not csv_ready:
+        print("No CSV files ready — aborting upload step.")
+        return
 
-        # TODO: change to month calc
-        # aggregate_15min_data(month, clickhouseConnect)
-        # thread = Thread(target=process_report_dump_file, args=(report, connectToClickHouseDB(),))
-        # thread.start()
+    # ── Step 2: upload CSV → ClickHouse  (I/O-bound → threads) ─────────────────
+    # Max 3 concurrent inserts: SummingMergeTree merges are memory-intensive,
+    # more parallel writers do not improve throughput and can OOM the server.
+    ch_workers = min(3, len(csv_ready))
+    print(f"\n=== Step 2: Uploading {len(csv_ready)} file(s) with {ch_workers} thread(s) ===")
+
+    with ThreadPoolExecutor(max_workers=ch_workers) as pool:
+        futures = {pool.submit(process_report_dump_file, r, connectToClickHouseDB()): r for r in csv_ready}
+        for f in as_completed(futures):
+            report = futures[f]
+            try:
+                f.result()
+                print(f"[{report}] upload done")
+            except Exception as exc:
+                print(f"[{report}] upload FAILED: {exc}")
 
 
 def connectToClickHouseDB():
