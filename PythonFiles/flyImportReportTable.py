@@ -29,6 +29,61 @@ def benchmark(method):
 workDir = os.path.dirname(os.path.realpath(__file__))
 
 
+class Progress:
+    """
+    Time-throttled progress printer for long-running pipeline steps.
+    Each printed line is self-contained and prefixed with a label, so
+    output from concurrent threads stays readable when lines interleave.
+    """
+
+    def __init__(self, label: str, total: int = 0, interval: float = 2.0):
+        self.label     = label
+        self.total     = total
+        self.count     = 0
+        self._start    = time.monotonic()
+        self._last     = 0.0
+        self._interval = interval
+
+    def update(self, n: int = 1):
+        self.count += n
+
+    @property
+    def _elapsed(self) -> float:
+        return time.monotonic() - self._start
+
+    @property
+    def _rate(self) -> float:
+        e = self._elapsed
+        return self.count / e if e > 0 else 0.0
+
+    def tick(self, extra: str = '', force: bool = False):
+        now = time.monotonic()
+        if not force and (now - self._last) < self._interval:
+            return
+        self._last = now
+        self._print(extra)
+
+    def _print(self, extra: str = ''):
+        rate = self._rate
+        if self.total > 0:
+            pct   = self.count / self.total
+            bw    = 28
+            bar   = '█' * int(bw * pct) + '░' * (bw - int(bw * pct))
+            eta_s = str(timedelta(seconds=int((self.total - self.count) / rate))) if rate > 0 else '?'
+            print(f"  {self.label}  [{bar}] {pct*100:5.1f}%  "
+                  f"{self.count:,}/{self.total:,}  {rate:,.0f}/s  ETA {eta_s}{extra}")
+        else:
+            elapsed_s = str(timedelta(seconds=int(self._elapsed)))
+            print(f"  {self.label}  {self.count:,}  {rate:,.0f}/s  elapsed {elapsed_s}{extra}")
+
+    def finish(self, extra: str = ''):
+        elapsed_s = str(timedelta(seconds=int(self._elapsed)))
+        rate      = self._rate
+        if self.total > 0:
+            print(f"  {self.label}  done: {self.count:,}/{self.total:,} in {elapsed_s}  ({rate:,.0f}/s){extra}")
+        else:
+            print(f"  {self.label}  done: {self.count:,} in {elapsed_s}  ({rate:,.0f}/s){extra}")
+
 
 @benchmark
 def decompressAndAlterReportFile(reportSuffix, dicZones):
@@ -48,40 +103,56 @@ def decompressAndAlterReportFile(reportSuffix, dicZones):
 
     # if altered report file not exists - will make it
     if not os.path.exists(spots_path):
-        with bz2.BZ2File(report_bz2_path, "r") as in_file:
-            with open(spots_path, 'w', newline='') as out_file:
-                out_file.write(out_file_header)
-                for line in in_file:
-                    line = line.decode()
-                    if line.startswith(strPrefix):
-                        line = line[len(strPrefix):-3]
-                        for record in line.split('),('):
-                            fields = record.split(',')
-                            if fields[4] == '\'FT8\'':
-                                zone1 = dicZones.get(int(f'{fields[1]}'), 0)
-                                zone2 = dicZones.get(int(f'{fields[2]}'), 0)
+        file_size = os.path.getsize(report_bz2_path)
+        progress = Progress(f"[{reportSuffix}] bz2→csv")
+        print(f"[{reportSuffix}] Decompressing {file_size / 1024**2:.1f} MB  →  {spots_path}")
 
-                                if zone1 != 0 and zone2 != 0 and zone1 != zone2:
-                                    grid1 = str(zone1[1])
-                                    grid2 = str(zone2[1])
-                                    lat1, lon1 = mh.to_location(grid1)
-                                    lat2, lon2 = mh.to_location(grid2)
+        # Wrap bz2 around a plain file object so raw_fp.tell() tracks
+        # compressed bytes read — gives accurate file-level percentage.
+        with open(report_bz2_path, 'rb') as raw_fp:
+            with bz2.BZ2File(raw_fp) as in_file:
+                with open(spots_path, 'w', newline='') as out_file:
+                    out_file.write(out_file_header)
+                    for line in in_file:
+                        line = line.decode()
+                        if line.startswith(strPrefix):
+                            line = line[len(strPrefix):-3]
+                            for record in line.split('),('):
+                                fields = record.split(',')
+                                if fields[4] == '\'FT8\'':
+                                    zone1 = dicZones.get(int(f'{fields[1]}'), 0)
+                                    zone2 = dicZones.get(int(f'{fields[2]}'), 0)
 
-                                    snr_raw = fields[7]
-                                    snr = int(snr_raw) if snr_raw != 'NULL' else 0
+                                    if zone1 != 0 and zone2 != 0 and zone1 != zone2:
+                                        grid1 = str(zone1[1])
+                                        grid2 = str(zone2[1])
+                                        lat1, lon1 = mh.to_location(grid1)
+                                        lat2, lon2 = mh.to_location(grid2)
 
-                                    spot = fields[9] + "," + fields[14][1:-1] + "," + str(zone1[0]) + "," + str(zone2[0]) + "," + grid1 + "," + grid2 + "," + str(lat1) + "," + str(lon1) + "," + str(lat2) + "," + str(lon2) + ",1," + str(snr) + "\n"
-                                    bunch.append(spot)
-                                    spot_count += 1
+                                        snr_raw = fields[7]
+                                        snr = int(snr_raw) if snr_raw != 'NULL' else 0
 
-                                    if len(bunch) == bunchsize:
-                                        out_file.writelines(bunch)
-                                        bunch = []
-                                        print(f"Spot bulk write into csv file {reportSuffix}, row count: {spot_count}")
-                out_file.writelines(bunch)
-                out_file.close()
-                return out_file.name
+                                        spot = fields[9] + "," + fields[14][1:-1] + "," + str(zone1[0]) + "," + str(zone2[0]) + "," + grid1 + "," + grid2 + "," + str(lat1) + "," + str(lon1) + "," + str(lat2) + "," + str(lon2) + ",1," + str(snr) + "\n"
+                                        bunch.append(spot)
+                                        spot_count += 1
+                                        progress.update()
+
+                                        if len(bunch) == bunchsize:
+                                            out_file.writelines(bunch)
+                                            bunch = []
+
+                            # Tick once per INSERT statement (thousands of records each);
+                            # bz2 reads in ~900 KB blocks so raw_fp.tell() updates coarsely
+                            # but is accurate enough for a progress indicator.
+                            pct_bz2 = raw_fp.tell() / file_size * 100
+                            progress.tick(extra=f"  (file: {pct_bz2:.1f}%)")
+
+                    out_file.writelines(bunch)
+
+        progress.finish(extra=f"  →  {spots_path}")
+        return spots_path
     else:
+        print(f"[{reportSuffix}] CSV already exists, skipping decompression.")
         return spots_path
 
 
@@ -153,6 +224,15 @@ def determineUTCminMax(reportSuffix, clickhouseClient):
     return utcMin, utcMax
 
 
+def count_csv_rows(path: str) -> int:
+    """Fast data-row count for large CSV files. Reads in 4 MB chunks, excludes header."""
+    count = 0
+    with open(path, 'rb') as f:
+        for chunk in iter(lambda: f.read(4 * 1024 * 1024), b''):
+            count += chunk.count(b'\n')
+    return max(0, count - 1)
+
+
 def ensure_table_snr_column(table_name, clickhouseClient):
     """Add snr Int32 column to existing tables that predate the SNR change."""
     columns = clickhouseClient.execute(
@@ -222,7 +302,12 @@ def process_report_dump_file(reportSuffix, clickhouseClient):
         count = 0
         flush_list = []
 
-        print(f"Open csv file for upload to ch: {out_file_name}")
+        print(f"[{reportSuffix}] Counting rows in CSV...")
+        total_rows   = count_csv_rows(out_file_name)
+        total_chunks = max(1, (total_rows + batch_size - 1) // batch_size)
+        print(f"[{reportSuffix}] Uploading {total_rows:,} rows → ClickHouse  ({total_chunks} chunk(s))")
+        progress = Progress(f"[{reportSuffix}] →ClickHouse", total=total_rows)
+
         with open(out_file_name, 'r') as f:
             csv_gen = ({k: schema.get(k, bypass)(v) for k, v in row.items()} for row in DictReader(f))
             i = 1
@@ -231,14 +316,16 @@ def process_report_dump_file(reportSuffix, clickhouseClient):
                 count += 1
                 if count == batch_size:
                     clickhouseClient.execute(f'INSERT INTO default.spots_sum_grid_ll_{tableSuffix} VALUES', flush_list)
-                    print(f"Processed chunk #{i} for file {reportSuffix}, total count: {batch_size*i}")
+                    progress.update(batch_size)
+                    progress.tick(extra=f"  chunk {i}/{total_chunks}", force=True)
                     flush_list = []
                     count = 0
                     i += 1
-            clickhouseClient.execute(f'INSERT INTO default.spots_sum_grid_ll_{tableSuffix} VALUES', flush_list)
-            print(f"Processed chunk #{i} for file {reportSuffix}, total count: {count}")
+            if flush_list:
+                clickhouseClient.execute(f'INSERT INTO default.spots_sum_grid_ll_{tableSuffix} VALUES', flush_list)
+                progress.update(len(flush_list))
 
-        print(f"Report {out_file_name} upload to clickhouse complete.")
+        progress.finish()
     else:
         print("No valid Clickhouse client")
 
