@@ -42,7 +42,7 @@ def decompressAndAlterReportFile(reportSuffix, dicZones):
     # out_file_header = "spotId,utc,band,zone1,zone2\n"
     # out_file_header = "utc,band,zone1,zone2,dxcc1,dxcc2\n"
     # out_file_header = "utc,band,zone1,zone2,cnt\n"
-    out_file_header = "utc,band,zone1,zone2,grid1,grid2,lat1,lon1,lat2,lon2,cnt\n"
+    out_file_header = "utc,band,zone1,zone2,grid1,grid2,lat1,lon1,lat2,lon2,cnt,snr\n"
     bunchsize = 1912000  # Experiment with different sizes
     bunch = []
 
@@ -67,8 +67,10 @@ def decompressAndAlterReportFile(reportSuffix, dicZones):
                                     lat1, lon1 = mh.to_location(grid1)
                                     lat2, lon2 = mh.to_location(grid2)
 
-                                    # spot = fields[9] + "," + fields[14][1:-1] + "," + str(zone1[0]) + "," + str(zone2[0]) + "," + str(fields[12]) + "," + str(fields[13]) + "\n"
-                                    spot = fields[9] + "," + fields[14][1:-1] + "," + str(zone1[0]) + "," + str(zone2[0]) + "," + grid1 + "," + grid2 + "," + str(lat1) + "," + str(lon1) + "," + str(lat2) + "," + str(lon2) +",1\n"
+                                    snr_raw = fields[7]
+                                    snr = int(snr_raw) if snr_raw != 'NULL' else 0
+
+                                    spot = fields[9] + "," + fields[14][1:-1] + "," + str(zone1[0]) + "," + str(zone2[0]) + "," + grid1 + "," + grid2 + "," + str(lat1) + "," + str(lon1) + "," + str(lat2) + "," + str(lon2) + ",1," + str(snr) + "\n"
                                     bunch.append(spot)
                                     spot_count += 1
 
@@ -151,6 +153,24 @@ def determineUTCminMax(reportSuffix, clickhouseClient):
     return utcMin, utcMax
 
 
+def ensure_table_snr_column(table_name, clickhouseClient):
+    """Add snr Int32 column to existing tables that predate the SNR change."""
+    columns = clickhouseClient.execute(
+        f"SELECT name FROM system.columns WHERE database='default' AND table='{table_name}'"
+    )
+    existing = {row[0] for row in columns}
+    if 'snr' not in existing:
+        clickhouseClient.execute(f'ALTER TABLE default.`{table_name}` ADD COLUMN `snr` Int32 DEFAULT 0')
+        print(f"Added snr column to {table_name}")
+    if 'cnt' in existing:
+        col_type = clickhouseClient.execute(
+            f"SELECT type FROM system.columns WHERE database='default' AND table='{table_name}' AND name='cnt'"
+        )
+        if col_type and col_type[0][0] == 'UInt8':
+            clickhouseClient.execute(f'ALTER TABLE default.`{table_name}` MODIFY COLUMN `cnt` UInt32')
+            print(f"Upgraded cnt UInt8→UInt32 in {table_name}")
+
+
 @benchmark
 def process_report_dump_file(reportSuffix, clickhouseClient):
     if clickhouseClient:
@@ -175,14 +195,15 @@ def process_report_dump_file(reportSuffix, clickhouseClient):
             '`lat1` Float64, '
             '`lon1` Float64, '
             '`lat2` Float64, '
-            '`lon2` Float64, '            
-            '`cnt` UInt8 '
-            # '`dxcc1` Int32, '
-            # '`dxcc2` Int32 '
+            '`lon2` Float64, '
+            '`cnt` UInt32, '
+            '`snr` Int32 '
             ')ENGINE = SummingMergeTree '
             'ORDER BY (utc, band, zone1, zone2, grid1, grid2, lat1, lon1, lat2, lon2) '
             'PARTITION BY toYYYYMMDD(toDateTime(utc)) '
             'PRIMARY KEY (utc, band, zone1, zone2, grid1, grid2, lat1, lon1, lat2, lon2); ')
+
+        ensure_table_snr_column(f'spots_sum_grid_ll_{tableSuffix}', clickhouseClient)
 
         schema = {
             'utc': int,
@@ -193,8 +214,7 @@ def process_report_dump_file(reportSuffix, clickhouseClient):
             'lat2': float,
             'lon2': float,
             'cnt': int,
-            # 'dxcc1': int,
-            # 'dxcc2': int,
+            'snr': int,
         }
         bypass = lambda x: x
 
